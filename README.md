@@ -1,10 +1,10 @@
 # nudec_BSM The Neutrino Decoupling Beyond the Standard Model
 
-This code "nudec_BSM", has been developed by Miguel Escudero Abenza in order to solve for the neutrino decoupling in the simplified approach to it developed in arxiv:1812.05605.
+This code "nudec_BSM", has been developed by Miguel Escudero Abenza in order to solve for the neutrino decoupling in the simplified approach to it developed in ArXiv:1812.05605.
 
-The user is referred to arxiv:1812.05605 for the relevant equations and approximations that lead to them.
+The user is referred to ArXiv:1812.05605 for the relevant equations and approximations that lead to them.
 
-If you use this code, please cite: arxiv:1812.05605
+If you use this code, please cite: ArXiv:1812.05605
 
 The code "nudec_BSM" as of 13/12/18 contains various python scripts which evaluate N_eff as relevant for CMB observations, and provide the relevant thermodynamic variables for 20 MeV >~ T_\gamma >~ 0.005 MeV. They are:
 
