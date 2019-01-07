@@ -1,5 +1,5 @@
 # Last modified 13/12/18. Miguel Escudero Abenza, miguel.escudero@kcl.ac.uk 
-# Check arxiv:XXXX for the relevant equations
+# Check ArXiv:1812.05605 for the relevant equations
 # Calculation of the temperature evolution in the SM and Neff in the MB approximation
 # Outputs a file with the temperature evolution as a function of time, named "SM/SM.dat"
 #####################################################################

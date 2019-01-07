@@ -1,5 +1,5 @@
 # Last modified 13/12/18. Miguel Escudero Abenza, miguel.escudero@kcl.ac.uk 
-# Check arxiv:XXXX for the relevant equations
+# Check ArXiv:1812.05605 for the relevant equations
 # Temperature evolution for a generic WIMP taking into account the energy exchange between electrons and neutrinos
 # from the WIMP annihilation.
 # The command to run should look like

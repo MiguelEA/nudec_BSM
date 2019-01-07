@@ -1,5 +1,5 @@
 # Last modified 13/12/18. Miguel Escudero Abenza, miguel.escudero@kcl.ac.uk 
-# Check arxiv:XXXX for the relevant equations
+# Check ArXiv:1812.05605 for the relevant equations
 # Temperature evolution including a particle that is in thermal equilibrium with the neutrino sector
 # The command to run should look like
 # python WIMP_nu.py 12.9 2 F test_nu

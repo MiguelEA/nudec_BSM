@@ -1,5 +1,5 @@
 # Last modified 13/12/18. Miguel Escudero Abenza, miguel.escudero@kcl.ac.uk 
-# Check arxiv:XXXX for the relevant equations
+# Check ArXiv:1812.05605 for the relevant equations
 # Temperature evolution for a particle in thermal equilibrium with the electromagnetic component of the plasma
 # The command to run should look like
 #  python WIMP_e.py  13.1 4 B test_e
