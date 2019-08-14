@@ -1,4 +1,4 @@
-# nudec_BSM Neutrino Decoupling Beyond the Standard Model
+# nudec_BSM: Neutrino Decoupling Beyond the Standard Model
 
 UPDATE 14/08/19. 
 
