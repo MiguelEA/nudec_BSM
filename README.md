@@ -1,9 +1,12 @@
-# 14/08/19. 
-Corrected the neutrino-neutrino and electron-neutrino reaction rates. Now the resulting Neff in the SM is 3.053. More details to appear in a new version of the arxiv.
+# nudec_BSM Neutrino Decoupling Beyond the Standard Model
+
+UPDATE 14/08/19. 
+
+Corrected the neutrino-neutrino and electron-neutrino reaction rates. Now the resulting Neff in the SM is 3.053. More details to appear in a new version of paper on the arxiv and in an erratum in JCAP.
 
 Code has been updated to be compatible with both Python2 and Python3.
 
-# nudec_BSM Neutrino Decoupling Beyond the Standard Model
+As of 13/12/18: 
 
 This code "nudec_BSM", has been developed by Miguel Escudero Abenza in order to solve for the neutrino decoupling in the simplified approach to it developed in ArXiv:1812.05605, JCAP 1902 (2019) 007.
 
