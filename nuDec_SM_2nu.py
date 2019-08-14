@@ -1,7 +1,8 @@
 # Last modified 13/08/19. Miguel Escudero Abenza, miguel.escudero@kcl.ac.uk
 # Check ArXiv:1812.05605 for the relevant equations
-# Calculation of the temperature evolution in the SM and Neff assuming neutrinos are described by a FD distribution
-# Outputs a file with T_nu/T_gamma as a function of T_gamma, named "SM/SM.dat"
+# Calculation of the temperature evolution in the SM and Neff
+# Evolving separately the temperatures of nu_e and nu_mu
+# Outputs a file with T_nue/T_gamma and T_numu/T_gamma as a function of T_gamma, named "SM/SM_emu.dat"
 #####################################################################
 import os
 import sys
@@ -15,7 +16,7 @@ dP_intdT   =interp1d(np.loadtxt("QED/QED_dP_intdT.cvs")[:,0],np.loadtxt("QED/QED
 d2P_intdT2 =interp1d(np.loadtxt("QED/QED_d2P_intdT2.cvs")[:,0],np.loadtxt("QED/QED_d2P_intdT2.cvs")[:,1],bounds_error=False,fill_value=0.0,kind='linear')
 
 ## Uncomment in order to remove the QED corrections
-P_int, dP_intdT, d2P_intdT2   = lambda x: 0, lambda x: 0, lambda x: 0
+#P_int, dP_intdT, d2P_intdT2   = lambda x: 0, lambda x: 0, lambda x: 0
 
 # All in MeV Units!
 GF  = 1.1663787e-5*1e-6 #in MeV^{-2}
@@ -29,11 +30,11 @@ FAC = 1./(6.58212e-22)
 sW2 = 0.223
 
 # Thermodynamics
-def rho_nu(T):   return 2 * 7./8. * np.pi**2/30. * T**4
+def rho_nu(T):  return 2 * 7./8. * np.pi**2/30. * T**4
 def rho_gam(T):  return 2 * np.pi**2/30. * T**4
 def rho_e(T):
     if T < me/30.0: return 0.0
-    else:  return 4./(2*np.pi**2)*T**4*quad(lambda E: E**2*(E**2-(me/T)**2)**0.5/(np.exp(E)+1.) ,me/T,100,epsabs=1e-12,epsrel = 1e-12)[0]
+    else:        return 4./(2*np.pi**2)*T**4*quad(lambda E: E**2*(E**2-(me/T)**2)**0.5/(np.exp(E)+1.) ,me/T,100,epsabs=1e-12,epsrel = 1e-12)[0]
 def p_e(T):
     if T < me/30.0:        return 0.0
     else:        return 4./(6*np.pi**2)*T**4*quad(lambda E: (E**2-(me/T)**2)**1.5/(np.exp(E)+1.) ,me/T,100,epsabs=1e-12,epsrel = 1e-12)[0]
@@ -73,17 +74,20 @@ def DeltaRho_numu(T_gam,T_nue,T_numu):
     return FAC * GF**2/np.pi**5 * ( (1. -4*sW2 + 8*sW2**2 ) * Ffunc_numu_e(T_gam,T_numu) -   Ffunc(T_numu,T_nue) )
 
 # Temperature Evolution Equations
-def dTnu_dt(T_gam,T_nue,T_numu):
-    return -4*Hubble(T_gam,T_nue,T_numu) * rho_nu(T_numu) / drho_nudT(T_numu) + (DeltaRho_nue(T_gam,T_nue,T_numu) + 2*DeltaRho_numu(T_gam,T_nue,T_numu))/(3* drho_nudT(T_numu))
+def dTnue_dt(T_gam,T_nue,T_numu):
+    return -4*Hubble(T_gam,T_nue,T_numu) * rho_nu(T_nue) / drho_nudT(T_nue) + DeltaRho_nue(T_gam,T_nue,T_numu)/ drho_nudT(T_nue)
+
+def dTnumu_dt(T_gam,T_nue,T_numu):
+    return -4*Hubble(T_gam,T_nue,T_numu) * rho_nu(T_numu) / drho_nudT(T_numu) + 2*DeltaRho_numu(T_gam,T_nue,T_numu)/(2* drho_nudT(T_numu))
 
 def dTgam_dt(T_gam,T_nue,T_numu):
     return -(Hubble(T_gam,T_nue,T_numu)*( 4*rho_gam(T_gam) + 3*(rho_e(T_gam)+p_e(T_gam)) + 3 * T_gam * dP_intdT(T_gam)) + DeltaRho_nue(T_gam,T_nue,T_numu) + 2*DeltaRho_numu(T_gam,T_nue,T_numu) )/( drho_gamdT(T_gam) + drho_edT(T_gam) + T_gam * d2P_intdT2(T_gam) )
 
 def dT_totdt(vec,t):
-    T_gam, T_nu = vec
-    return [dTgam_dt(T_gam,T_nu,T_nu),dTnu_dt(T_gam,T_nu,T_nu)]
+    T_gam, T_nue, T_numu = vec
+    return [dTgam_dt(T_gam,T_nue,T_numu),dTnue_dt(T_gam,T_nue,T_numu),dTnumu_dt(T_gam,T_nue,T_numu)]
 
-#Start the integration at a common temperature of 10 MeV, which corresponds to t ~ 8*10^{-3} s
+# Start the integration at a common temperature of 10 MeV, which corresponds to t ~ 8*10^{-3} s
 T0 = 10.0
 t0 = 1./(2*Hubble(T0,T0,T0))
 
@@ -92,26 +96,29 @@ t_max = 1e4
 
 # Calculate
 tvec = np.logspace(np.log10(t0),np.log10(t_max),num=300)
-sol = odeint(dT_totdt, [T0,T0], tvec, rtol = 1e-8, atol= 1e-8)
+sol = odeint(dT_totdt, [T0,T0,T0], tvec, rtol = 1e-8, atol= 1e-8)
 
 # Display Results
-print("Neff        = ", round(Neff_func(sol[-1,0],sol[-1,1],sol[-1,1]),5))
-print("Tgam/Tnu    = ", round(sol[-1,0]/sol[-1,1],6))
+print("Neff        = ", round(Neff_func(sol[-1,0],sol[-1,1],sol[-1,2]),5))
+print("Tgam/Tnu_e  = ", round(sol[-1,0]/sol[-1,1],5))
+print("Tgam/Tnu_mu = ", round(sol[-1,0]/sol[-1,2],5))
 
 # Calculate some Thermodynamic quantities
 rho_vec, p_vec = np.zeros(len(tvec)),np.zeros(len(tvec))
 for i in range(len(tvec)):
-    rho_vec[i], p_vec[i]  = rho_tot(sol[i,0], sol[i,1], sol[i,1]), p_tot(sol[i,0], sol[i,1], sol[i,1])
+    rho_vec[i], p_vec[i]  = rho_tot(sol[i,0], sol[i,1], sol[i,2]), p_tot(sol[i,0], sol[i,1], sol[i,2])
 
 # Store results
-with open("SM/SM.dat", 'w') as f:
-    f.write("# SM with the same temperature for all the neutrino species"+"\n")
+with open("SM/SM_emu.dat", 'w') as f:
+    f.write("# SM with evolving differently nu_e and nu_mu"+"\n")
     f.write("# QED thermal corrections with m_e and stats in the collision terms"+"\n")
-    f.write("# Neff        = "),f.write("{:<12}".format(round(Neff_func(sol[-1,0],sol[-1,1],sol[-1,1]),5))),f.write("\n")
-    f.write("# Tgam/Tnu    = "),f.write("{:<12}".format(round(sol[-1,0]/sol[-1,1],5))),f.write("\n")
-    f.write("{:<13}".format("#T_gamma (MeV)")), f.write("{:<13}".format("T_gam/T_nu")),f.write("{:<14}".format("R_tot/T_gam^4 ")),f.write("{:<14}".format("P_tot/T_gam^4"+"\n"))
+    f.write("# Neff        = "),f.write("{:<12}".format(round(Neff_func(sol[-1,0],sol[-1,1],sol[-1,2]),5))),f.write("\n")
+    f.write("# Tgam/Tnu_e  = "),f.write("{:<12}".format(round(sol[-1,0]/sol[-1,1],5))),f.write("\n")
+    f.write("# Tgam/Tnu_mu = "),f.write("{:<12}".format(round(sol[-1,0]/sol[-1,2],5))),f.write("\n")
+
+    f.write("{:<13}".format("#T_gamma (MeV)")), f.write("{:<13}".format("T_gam/T_nue")), f.write("{:<13}".format("T_gam/T_numu")),f.write("{:<14}".format("R_tot/T_gam^4 ")),f.write("{:<14}".format("P_tot/T_gam^4"+"\n"))
     for i in range(len(tvec)):
-        f.write("{:.7E}".format(1e3*sol[i,0])),f.write("  "), f.write("{:<12}".format(round(sol[i,0]/sol[i,1],6))), f.write("{:.7E}".format(rho_vec[i]/sol[i,0]**4)),f.write("  "),f.write("{:.7E}".format(p_vec[i]/sol[i,0]**4)),f.write("\n")
+        f.write("{:.7E}".format(1e3*sol[i,0])),f.write("  "), f.write("{:<12}".format(round(sol[i,0]/sol[i,1],6))), f.write("{:<12}".format(round(sol[i,0]/sol[i,2],6))), f.write("{:.7E}".format(rho_vec[i]/sol[i,0]**4)),f.write("  "),f.write("{:.7E}".format(p_vec[i]/sol[i,0]**4)),f.write("\n")
 
 
 
