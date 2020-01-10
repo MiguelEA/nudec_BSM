@@ -12,22 +12,22 @@ NUDEC_BSM.py          : This is a runner file that shows an example of how to ru
 
 nuDec_SM.py           : Solves for neutrino decoupling in the SM.
 
-nuDec_SM_2_nu.py      : Solves for neutrino decoupling in the SM allowing evolving seperately  nu_e and nu_mu populations.
+nuDec_SM_2_nu.py      : Solves for neutrino decoupling in the SM evolving seperately the nu_e and nu_{mu-tau} populations.
 
-WIMP_e.py             : Solves for neutrino decoupling in the presence of a particle in thermal equilibrium with the electromagnetic component of the plasma.
+WIMP_e.py             : Solves for neutrino decoupling in the presence of a particle in thermal equilibrium with the electromagnetic sector of the plasma.
 
-WIMP_nu.py            : Solves for neutrino decoupling in the presence of a particle in thermal equilibrium with the neutrino component of the plasma.
+WIMP_nu.py            : Solves for neutrino decoupling in the presence of a particle in thermal equilibrium with the neutrino sector of the plasma.
 
-WIMP_generic.py       : Solves for neutrino decoupling in the presence of a particle in thermal equilibrium with either the neutrino or electromagnetic component of the SM plasma, but which still interacts with the other component by means of annihilations. 
+WIMP_generic.py       : Solves for neutrino decoupling in the presence of a particle in thermal equilibrium with either the neutrino or electromagnetic sectors of the plasma, but which still interacts with the other sector by means of annihilations. 
 
 The header of each script contains the details on how to run and NUDEC_BSM.py contains an example for each case. 
 
 The Mathematica version contains the following scripts:
 
-BasicModules.nb     : Contains basic modules used in every model: QED finite temperature correctiosn, Thermodynamic formulae, SM interaction rates, constants, and parameters. When run it outputs BasicModules.m that can be loaded in any module.
+BasicModules.nb     : Contains modules common to all models: QED finite temperature corrections, Thermodynamic formulae, SM interaction rates, constants, and parameters. When run it outputs BasicModules.m that can be loaded by any module.
 
 Neff_SM.nb          : Solves for neutrino decoupling in the Standard Model. To run one should simply run the entire script and see the examples and output.
 
 DarkRadiation.nb    : Solves for neutrino decoupling in the presence of Dark Radiation. One should simply run the entire script to find the thermodynamics. The only input parameter in this case is DNeff. 
 
-NuScalar.nb         : Solves for the early Universe thermodynamics in the presence of a very light (eV<m<MeV) and weakly coupled (lambda < 10^{-9}) neutrinophilic scalar. There are two input parameters in this case Gamma_eff and mphi (MeV). In the particular scenario considered for this case the results have been shown to be very accurate for Gamma_eff > 10^{-3}. Note that for Gamma_eff < 10^{-3} the accuracy could be substantially lowered. 
+NuScalar.nb         : Solves for the early Universe thermodynamics in the presence of a very light (eV<m<MeV) and weakly coupled (lambda < 10^{-9}) neutrinophilic scalar. There are two input parameters in this case: Gamma_eff and mphi (MeV). In the particular scenario considered for this scenario the results have been shown to be very accurate for Gamma_eff > 10^{-3}. Note that for Gamma_eff < 10^{-3} the accuracy could be substantially lowered. 
