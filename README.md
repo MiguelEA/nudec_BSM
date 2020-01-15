@@ -1,6 +1,6 @@
 # NUDEC_BSM: Neutrino Decoupling Beyond the Standard Model
 
-This code "NUDEC_BSM", has been developed by Miguel Escudero Abenza in order to solve for early Universe thermodynamics and neutrino decoupling following the simplified approach of ArXiv:1812.05605 [JCAP 1902 (2019) 007] and ArXiv:2001.XXXXX. If you use this code, please, cite these references. 
+This code "NUDEC_BSM", has been developed by Miguel Escudero Abenza in order to solve for early Universe thermodynamics and neutrino decoupling following the simplified approach of ArXiv:1812.05605 [JCAP 1902 (2019) 007] and ArXiv:2001.04466. If you use this code, please, cite these references. 
 
 As of 10/01/2020:
 
