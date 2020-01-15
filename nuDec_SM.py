@@ -1,5 +1,5 @@
 # Last modified 10/01/2020. Miguel Escudero Abenza, miguel.escudero@kcl.ac.uk
-# Check ArXiv:1812.05605 and ArXiv:XXXXXX for the relevant equations
+# Check ArXiv:1812.05605 and ArXiv:2001.04466 for the relevant equations
 # Calculation of the temperature evolution in the SM and Neff assuming neutrinos are described by a FD distribution
 # Outputs a file with T_nu/T_gamma as a function of T_gamma, named "Results/SM/SM.dat"
 #####################################################################
