@@ -6,7 +6,7 @@ As of 10/01/2020:
 
 There is a Mathematica and a Python version of NUDEC_BSM. The code consists of various scripts that calculate early Universe thermodynamics in various scenarios typically within the context of neutrino decoupling. 
 
-The Python version contains the following scripts:
+The Python version is compatible with Python2 and Python3 and contains the following scripts:
 
 NUDEC_BSM.py          : This is a runner file that shows an example of how to run each of the models coded up in Python. 
 
