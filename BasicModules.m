@@ -52,7 +52,7 @@ Pint[x_]:=0;dPintdT[x_]:=0;d2PintdT2[x_]:=0;*)
 (* ::Input::Initialization:: *)
 (* Load the corrections to the rates as a result of a non-negligible electron mass *)
 SetDirectory[NotebookDirectory[]];
-Clear[fann\[Nu]e,fsca\[Nu]e,fann\[Nu]\[Mu],fsca\[Nu]\[Mu],fscan\[Nu]e,fscan\[Nu]\[Mu]];
+Clear[geL,geR,g\[Mu]L,g\[Mu]R,fann\[Nu]e,fsca\[Nu]e,fann\[Nu]\[Mu],fsca\[Nu]\[Mu],fscan\[Nu]e,fscan\[Nu]\[Mu]];
 data=Import["SM_Rates/nue_ann.dat","Table",HeaderLines-> 1];
 fann\[Nu]e=Interpolation[data];
 data=Import["SM_Rates/nue_scatt.dat","Table",HeaderLines-> 1];
@@ -73,16 +73,20 @@ fann\[Nu]e[x_]:=1;fsca\[Nu]e[x_]:=1;fann\[Nu]\[Mu][x_]:=1;fsca\[Nu]\[Mu][x_]:=1;
 (* Spin-Statistics Corrections to the MB interaction rates. Set to 1 for the MB case *)
 faFD = 0.884;fsFD = 0.829;fnFD = 0.852;
 
+(* Low energy couplings desciribin NC and CC interactions of neutrinos and electrons *)
+(* See Table 10.3 of the EW review of the PDG and Table 6 of 1303.5522  *)
+geL=0.727;geR=0.233;g\[Mu]L=-0.273;g\[Mu]R=0.233;
+
 Func[T1_,T2_,\[Mu]1_,\[Mu]2_]:=32 *faFD*(Exp[2 \[Mu]1/T1]T1^9-Exp[2 \[Mu]2/T2]T2^9)+ 56 *fsFD*T1^4 T2^4 Exp[\[Mu]1/T1]Exp[\[Mu]2/T2]*(T1-T2);
 
 (* Energy Density Transfer Rates: \[Delta]\[Rho]/\[Delta]t *)
-\[CapitalDelta]\[Rho]SM\[Nu]e[T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1   (GF^2)/\[Pi]^5 ((1+4 SW2 +8 SW2^2)(32*faFD*fann\[Nu]e[T\[Gamma]]*(T\[Gamma]^9-Exp[2 \[Mu]\[Nu]e/T\[Nu]e]T\[Nu]e^9)+56*fsFD* T\[Gamma]^4 *T\[Nu]e^4*fsca\[Nu]e[T\[Gamma]]*Exp[\[Mu]\[Nu]e/T\[Nu]e]*(T\[Gamma]-T\[Nu]e))+2Func[T\[Nu]\[Mu],T\[Nu]e,\[Mu]\[Nu]\[Mu],\[Mu]\[Nu]e])/.{SW2-> 0.223}/.GF-> 1.1663787 10^-11;
-\[CapitalDelta]\[Rho]SM\[Nu]\[Mu][T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1   (GF^2)/\[Pi]^5 ((1-4 SW2 +8 SW2^2)(32*faFD*fann\[Nu]\[Mu][T\[Gamma]]*(T\[Gamma]^9-Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]T\[Nu]\[Mu]^9)+56 *fsFD*T\[Gamma]^4 *T\[Nu]\[Mu]^4*fsca\[Nu]\[Mu][T\[Gamma]]*Exp[\[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]*(T\[Gamma]-T\[Nu]\[Mu]))-Func[T\[Nu]\[Mu],T\[Nu]e,\[Mu]\[Nu]\[Mu],\[Mu]\[Nu]e])/.{SW2-> 0.223}/.GF-> 1.1663787 10^-11;
+\[CapitalDelta]\[Rho]SM\[Nu]e[T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1   (GF^2)/\[Pi]^5 (4 *(geL^2+geR^2)(32*faFD*fann\[Nu]e[T\[Gamma]]*(T\[Gamma]^9-Exp[2 \[Mu]\[Nu]e/T\[Nu]e]T\[Nu]e^9)+56*fsFD* T\[Gamma]^4 *T\[Nu]e^4*fsca\[Nu]e[T\[Gamma]]*Exp[\[Mu]\[Nu]e/T\[Nu]e]*(T\[Gamma]-T\[Nu]e))+2Func[T\[Nu]\[Mu],T\[Nu]e,\[Mu]\[Nu]\[Mu],\[Mu]\[Nu]e])/.GF-> 1.1663787 10^-11;
+\[CapitalDelta]\[Rho]SM\[Nu]\[Mu][T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1   (GF^2)/\[Pi]^5 (4 *(g\[Mu]L^2+g\[Mu]R^2)(32*faFD*fann\[Nu]\[Mu][T\[Gamma]]*(T\[Gamma]^9-Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]T\[Nu]\[Mu]^9)+56 *fsFD*T\[Gamma]^4 *T\[Nu]\[Mu]^4*fsca\[Nu]\[Mu][T\[Gamma]]*Exp[\[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]*(T\[Gamma]-T\[Nu]\[Mu]))-Func[T\[Nu]\[Mu],T\[Nu]e,\[Mu]\[Nu]\[Mu],\[Mu]\[Nu]e])/.GF-> 1.1663787 10^-11;
 \[CapitalDelta]\[Rho]SM\[Nu][T\[Gamma]_,T\[Nu]_,\[Mu]\[Nu]_]:=1/3 (\[CapitalDelta]\[Rho]SM\[Nu]e[T\[Gamma],T\[Nu],T\[Nu],\[Mu]\[Nu],\[Mu]\[Nu]]+2\[CapitalDelta]\[Rho]SM\[Nu]\[Mu][T\[Gamma],T\[Nu],T\[Nu],\[Mu]\[Nu],\[Mu]\[Nu]]);
 
 (* Number Density Transfer Rates: \[Delta]n/\[Delta]t *)
-\[CapitalDelta]nSM\[Nu]e[T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1*8*fnFD * (GF^2)/\[Pi]^5 ((1+4 SW2 + 8SW2^2) *fscan\[Nu]e[T\[Gamma]]*(T\[Gamma]^8-Exp[2 \[Mu]\[Nu]e/T\[Nu]e]T\[Nu]e^8)+2(T\[Nu]\[Mu]^8 Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]-T\[Nu]e^8 Exp[2 \[Mu]\[Nu]e/T\[Nu]e]) )/.{SW2-> 0.223}/.GF-> 1.1663787 10^-11;
-\[CapitalDelta]nSM\[Nu]\[Mu][T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1*8*fnFD * (GF^2)/\[Pi]^5 ((1-4 SW2 + 8SW2^2) *fscan\[Nu]\[Mu][T\[Gamma]]*(T\[Gamma]^8-Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]T\[Nu]\[Mu]^8)-(T\[Nu]\[Mu]^8 Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]-T\[Nu]e^8 Exp[2 \[Mu]\[Nu]e/T\[Nu]e]))/.{SW2-> 0.223}/.GF-> 1.1663787 10^-11;
+\[CapitalDelta]nSM\[Nu]e[T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1*8*fnFD * (GF^2)/\[Pi]^5 (4 *(geL^2+geR^2)*fscan\[Nu]e[T\[Gamma]]*(T\[Gamma]^8-Exp[2 \[Mu]\[Nu]e/T\[Nu]e]T\[Nu]e^8)+2(T\[Nu]\[Mu]^8 Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]-T\[Nu]e^8 Exp[2 \[Mu]\[Nu]e/T\[Nu]e]) )/.GF-> 1.1663787 10^-11;
+\[CapitalDelta]nSM\[Nu]\[Mu][T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1*8*fnFD * (GF^2)/\[Pi]^5 (4*(g\[Mu]L^2+g\[Mu]R^2) *fscan\[Nu]\[Mu][T\[Gamma]]*(T\[Gamma]^8-Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]T\[Nu]\[Mu]^8)-(T\[Nu]\[Mu]^8 Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]-T\[Nu]e^8 Exp[2 \[Mu]\[Nu]e/T\[Nu]e]))/.GF-> 1.1663787 10^-11;
 \[CapitalDelta]nSM\[Nu][T\[Gamma]_,T\[Nu]_,\[Mu]\[Nu]_]:=1/3 (\[CapitalDelta]nSM\[Nu]e[T\[Gamma],T\[Nu],T\[Nu],\[Mu]\[Nu],\[Mu]\[Nu]]+2\[CapitalDelta]nSM\[Nu]\[Mu][T\[Gamma],T\[Nu],T\[Nu],\[Mu]\[Nu],\[Mu]\[Nu]]);
 
 
@@ -146,10 +150,7 @@ sBEM[T_,\[Mu]_,m_]:= (\[Rho]BEM[T,\[Mu],m]+ pBEM[T,\[Mu],m]-\[Mu] nBEM[T,\[Mu],m
 
 
 (* ::Input::Initialization:: *)
-SW2=0.223; (* 1-MW^2/MZ^2 *)
-GF=1.1663787 10^-11; (* GFermi in MeV^-2 *)
-
-m0=1; (* Used to generate a dimensionless scale factor *)
+m0=0.511; (* Used to generate a dimensionless scale factor *)
 me = 0.511; (* Electron Mass in MeV *)
 FacMeVtos1=1/(6.58212 10^-16 10^-6); (* This is used to convert MeV to s^-1 *)
 

@@ -1,4 +1,4 @@
-# Last modified 10/01/2020. Miguel Escudero Abenza, miguel.escudero@kcl.ac.uk
+# Last modified 27/05/2020. Miguel Escudero Abenza, miguel.escudero@kcl.ac.uk
 # Check ArXiv:1812.05605 for the relevant equations
 # Temperature evolution for a generic WIMP taking into account the energy exchange between electrons and neutrinos
 # from the WIMP annihilation.
@@ -71,8 +71,8 @@ Mpl = 1.22091e19*1e3
 # Conversion factor to convert MeV^-1 into seconds
 FAC = 1./(6.58212e-22)
 
-# sW2 =  1-Mw^2/Mz^2
-sW2 = 0.223
+# Left and Right nu-e couplings as relevant for E < 10 MeV. From the EW review of the PDG
+geL, geR, gmuL, gmuR = 0.727, 0.233, -0.273, 0.233
 
 # Thermodynamics
 def rho_nu(T):  return 2 * 7./8. * np.pi**2/30. * T**4
@@ -127,9 +127,9 @@ def Ffunc(T1,T2):
 
 # Energy Transfer Rates
 def DeltaRho_nue(T_gam,T_nue,T_numu):
-    return FAC * GF**2/np.pi**5 * ( (1. +4*sW2 + 8*sW2**2 ) * Ffunc_nue_e(T_gam,T_nue)  + 2*Ffunc(T_numu,T_nue) )
+    return FAC * GF**2/np.pi**5 * ( 4* (geL**2 + geR**2) * Ffunc_nue_e(T_gam,T_nue)  + 2*Ffunc(T_numu,T_nue) )
 def DeltaRho_numu(T_gam,T_nue,T_numu):
-    return FAC * GF**2/np.pi**5 * ( (1. -4*sW2 + 8*sW2**2 ) * Ffunc_numu_e(T_gam,T_numu) -   Ffunc(T_numu,T_nue) )
+    return FAC * GF**2/np.pi**5 * ( 4* (gmuL**2 + gmuR**2) * Ffunc_numu_e(T_gam,T_numu) -   Ffunc(T_numu,T_nue) )
 
 # Energy Transfer Rate as induced by WIMP annihilations
 if MODE == 'e':
