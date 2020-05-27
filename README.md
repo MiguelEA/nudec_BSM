@@ -1,6 +1,6 @@
 # NUDEC_BSM: Neutrino Decoupling Beyond the Standard Model
 
-This code "NUDEC_BSM", has been developed by Miguel Escudero Abenza in order to solve for early Universe thermodynamics and neutrino decoupling following the simplified approach of ArXiv:1812.05605 [JCAP 1902 (2019) 007] and ArXiv:2001.04466. If you use this code, please, cite these references. 
+This code "NUDEC_BSM", has been developed by Miguel Escudero Abenza in order to solve for early Universe thermodynamics and neutrino decoupling following the simplified approach of ArXiv:1812.05605 [JCAP 1902 (2019) 007] and ArXiv:2001.04466 [JCAP 05 (2020) 048]. If you use this code, please, cite these references. 
 
 As of 10/01/2020:
 
@@ -30,4 +30,5 @@ Neff_SM.nb          : Solves for neutrino decoupling in the Standard Model. To r
 
 DarkRadiation.nb    : Solves for neutrino decoupling in the presence of Dark Radiation. One should simply run the entire script to find the thermodynamics. The only input parameter in this case is DNeff. 
 
-NuScalar.nb         : Solves for the early Universe thermodynamics in the presence of a very light (eV<m<MeV) and weakly coupled (lambda < 10^{-9}) neutrinophilic scalar. There are two input parameters in this case: Gamma_eff and mphi (MeV). In the particular scenario considered for this scenario the results have been shown to be very accurate for Gamma_eff > 10^{-3}. Note that for Gamma_eff < 10^{-3} the accuracy could be substantially lowered. 
+NuScalar.nb         : Solves for the early Universe thermodynamics in the presence of a very light (eV<m<MeV) and weakly coupled (lambda < 10^{-9}) neutrinophilic scalar. There are two input parameters in this case: Gamma_eff and mphi (MeV). In the particular scenario considered, the results have been shown to be very accurate for Gamma_eff > 10^{-3}. Note that for Gamma_eff < 10^{-3} the accuracy could be substantially lowered. 
+
