@@ -13,5 +13,5 @@
 1) Corrected an error in the neutrino-electron interaction rates.
 2) We find Neff^SM = 3.053
 
-19/12/2019: First Release
+19/12/2018: First Release
 1) We find Neff^SM = 3.034
