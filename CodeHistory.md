@@ -4,9 +4,10 @@
 3) We have now set m0 = me. It was previously m0 = 1 MeV. This does not change any result but only rescales the scale factor a. 
 
 10/01/2020: Major Update
-1) We find Neff^SM = 3.045
-2) Additonal BSM models have been coded up
-3) Code is now in both Mathematica and Python (2 and 3) versions
+1) Included spin-statistics and the electron mass in the nu-e and nu-nu interaction rates
+2) We find Neff^SM = 3.045
+3) Additonal BSM models have been coded up
+4) Code is now in both Mathematica and Python (2 and 3) versions
 
 20/08/2019: Major Update
 Corrected an error in the neutrino-electron interaction rates.
