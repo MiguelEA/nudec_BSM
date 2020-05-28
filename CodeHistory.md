@@ -10,8 +10,8 @@
 4) Code is now in both Mathematica and Python (2 and 3) versions
 
 20/08/2019: Major Update
-Corrected an error in the neutrino-electron interaction rates.
-We find Neff^SM = 3.053
+1) Corrected an error in the neutrino-electron interaction rates.
+2) We find Neff^SM = 3.053
 
 19/12/2019: First Release
-We find Neff^SM = 3.034
+1) We find Neff^SM = 3.034
