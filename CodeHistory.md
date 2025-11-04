@@ -1,3 +1,5 @@
+04/11/2025: Version 2 Release
+
 27/05/2020: Minor Update
 1) Updated the neutrino-electron interaction cross sections so as to include EW radiative corrections to the SM neutral current as relevant for E < 10 MeV. Neutrino-electron interaction rates are now 1.8% stronger than in the previous version. 
 2) We still find Neff^SM = 3.045.

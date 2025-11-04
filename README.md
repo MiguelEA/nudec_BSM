@@ -2,6 +2,10 @@
 
 This code "NUDEC_BSM", has been developed by Miguel Escudero Abenza in order to solve for early Universe thermodynamics and neutrino decoupling following the simplified approach of ArXiv:1812.05605 [JCAP 1902 (2019) 007] and ArXiv:2001.04466 [JCAP 05 (2020) 048]. If you use this code, please, cite these references. 
 
+As of 04/11/2025:
+
+New version 2 of the code being imported under branch ``nudec_v2``.
+
 As of 10/01/2020:
 
 There is a Mathematica and a Python version of NUDEC_BSM. The code consists of various scripts that calculate early Universe thermodynamics in various scenarios typically within the context of neutrino decoupling. 
