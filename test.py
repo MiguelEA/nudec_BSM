@@ -39,7 +39,7 @@ print("heff         = ", f"{heff:.10g}")
 
 
 # write thermodynamic history to file:A
-fname = "scan_hist.dat"
+fname = "SM_results/scan_hist.dat"
 with open(fname, "w") as fout:
     fout.write("# Columns: t (s), T_gam (MeV), T_nue (MeV), T_numu (MeV), mu_nue (MeV), mu_numu (MeV), z\n")
 
