@@ -865,7 +865,12 @@ class NuDec:
                 """
                 cf. eqs.(D.21) and (D.22)
                 """
-                return 1/4*(self.Y(tau, interp) - 3*tau**2*self.K(tau, interp))
+                if tau>NuDec_Const.tau_max_sf_series: 
+                    return 0.
+                elif tau<NuDec_Const.tau_min_sf_series/10:
+                    return ( 7.*np.pi**2 - 15.*tau**2 )/120.
+                else:
+                    return 1/4*(self.Y(tau, interp) - 3*tau**2*self.K(tau, interp))
 
 
 
