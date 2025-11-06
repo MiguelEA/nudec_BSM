@@ -48,7 +48,7 @@
     data_rates   : [string]
                    Points to the file which should be used for the energy and 
                    number density transfer rates, namely the default provided: 
-                   -> rate_coefficients_neutrinos.dat (stored in data/)
+                   -> rate_coefficients_neutrinos.dat (stored in BasicModules_data/)
 
   Once the class is ready, the following line will solve the necessary 
   initial value problem (from T_ini = 10 MeV to T_fin = 0.009 MeV by default). 
@@ -182,11 +182,11 @@ class NuDec_Const:
 
 
 class NuDec:
-    def __init__(self, data_rates: str= NuDec_Const.cwd + '/data/rate_coefficients_neutrinos.dat', 
+    def __init__(self, data_rates: str= NuDec_Const.cwd + '/BasicModules_data/rate_coefficients_neutrinos.dat', 
                     use_data_QED: bool= False, 
-                    data_QED_p_int: str= NuDec_Const.cwd + '/data/QED_p_int.dat',
-                    data_QED_dp_dT_int: str= NuDec_Const.cwd + '/data/QED_dp_dT_int.dat',
-                    data_QED_d2p_dT2_int: str= NuDec_Const.cwd + '/data/QED_d2p_dT2_int.dat', 
+                    data_QED_p_int: str= NuDec_Const.cwd + '/BasicModules_data/QED_p_int.dat',
+                    data_QED_dp_dT_int: str= NuDec_Const.cwd + '/BasicModules_data/QED_dp_dT_int.dat',
+                    data_QED_d2p_dT2_int: str= NuDec_Const.cwd + '/BasicModules_data/QED_d2p_dT2_int.dat', 
                     Bessel: bool= True, interp: bool= True, interp_num: int= 1e4) -> None:
         self.Bessel         = Bessel
         self.use_data_QED   = use_data_QED
