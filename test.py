@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from importlib import reload
 
-import source.nudec_source as ns
+import BasicModules_source.nudec_source as ns
 
 nudec = ns.NuDec()
 
