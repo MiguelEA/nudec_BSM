@@ -14,7 +14,7 @@ This version is compatible with Python3 and contains the following scripts:
 
 * ``nudec.ipynb`` : Jupyter notebook...
 
-* ``source/nudec_source.py`` : Main source file, includes classes needed to solve for neutrino decoupling. 
+* ``BasicModules_source/nudec_source.py`` : Main source file, includes classes needed to solve for neutrino decoupling. 
 
 The header of each script contains the details on how to run and NUDEC_BSM.py contains an example for each case. 
 
@@ -22,8 +22,10 @@ The header of each script contains the details on how to run and NUDEC_BSM.py co
 
 The Mathematica version contains the following scripts:
 
-* ``NAME.nb`` : Contains modules ...
+* ``Neff_SM.nb`` : Contains several illustrations of how to import and run the modules in Mathematica
+
+* ``BasicModules_source/BasicModules_v2.m`` : Mathematica package file (see also notebook with same name).
 
 ## Pre-tabulated data
 
-Stored under ``data/``. 
+Stored under ``BasicModules_data/``. 
