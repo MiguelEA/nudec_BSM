@@ -10,7 +10,7 @@ New version 2 of the code being imported under branch ``nudec_v2``.
 
 This version is compatible with Python3 and contains the following scripts:
 
-* ``test.py`` : Minimal example file that shows how to run the basic models in Python. 
+* ``test.py`` : Minimal example file that shows how to import and run the basic models in Python. 
 
 * ``nudec.ipynb`` : Jupyter notebook walkthrough, including several plots. 
 
@@ -21,10 +21,10 @@ This version is compatible with Python3 and contains the following scripts:
 
 The Mathematica version contains the following scripts:
 
-* ``Neff_SM.nb`` : Contains several illustrations of how to import and run the modules in Mathematica
+* ``Neff_SM.nb`` : Contains several illustrations of how to import and run the modules in Mathematica. 
 
 * ``BasicModules_source/nudec_v2.m`` : Mathematica package file (see also notebook with same name).
 
 ## Pre-tabulated data
 
-Stored under ``BasicModules_data/``. This includes electron mass dependent coefficients for neutrino interaction rates, as well as the interacting QED pressure and its first two derivatives. See sec.8 of [2511.XXXXX](https://arxiv.org/abs/2511.XXXXX).
+Stored under ``BasicModules_data/``. This includes electron mass dependent (linear response) coefficients for neutrino interaction rates, as well as the interacting QED pressure (as a function of temperature, up to order e<sup>5</sup>) and its first two derivatives. See sec.8 of [2511.XXXXX](https://arxiv.org/abs/2511.XXXXX).
