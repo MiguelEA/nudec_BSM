@@ -1,5 +1,5 @@
 """
-  nudec_BSM_v2: neutrino decoupling in and beyond the Standard Model
+  nudec_v2: neutrino decoupling in and beyond the Standard Model
   Copyright (C) 2025 M. Escudero, G. Jackson, M. Laine, S. Sandner
 
   This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
   temperature evolution as studied in the associated paper. A jupyter 
   notebook nudec.ipynb is also included The class is initialized as
 
-    nudec   = nudec_source.NuDec([optional args below])
+    nudec   = nudec_v2.NuDec([optional args below])
 
     ----------
     use_data_QED : [bool]
