@@ -27,4 +27,4 @@ The Mathematica version contains the following scripts:
 
 ## Pre-tabulated data
 
-Stored under ``BasicModules_data/``. This includes electron mass dependent (linear response) coefficients for neutrino interaction rates, as well as the interacting QED pressure (as a function of temperature, up to order e<sup>5</sup>) and its first two derivatives. See sec.8 of [2511.XXXXX](https://arxiv.org/abs/2511.XXXXX).
+Stored under ``BasicModules_data/``. This includes the electron mass dependent (linear response) coefficients for neutrino interaction rates, as well as the interacting QED pressure (as a function of temperature, up to order e<sup>5</sup>) and its first two derivatives. See section 8 of [2511.XXXXX](https://arxiv.org/abs/2511.XXXXX) for more details.
