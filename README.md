@@ -1,6 +1,6 @@
 # Neutrino Decoupling in and beyond the Standard Model
 
-This code "nudec_BSM_v2" provides a fast and flexible description of neutrino decoupling in the early universe following the momentum-averaged approach. Independent Mathematica and Python implementations are provided, and should be easy to link with other codes, e.g. for BBN. The latest version has been developed by M. Escudero, G. Jackson, M. Laine and S. Sandner in [2511.XXXXX](https://arxiv.org/abs/2511.XXXXX) and builds on the earlier v1 from M. Escudero in [1812.05605](https://arxiv.org/abs/1812.05605) and [2001.04466](https://arxiv.org/abs/1812.05605). 
+This code "nudec_BSM_v2" provides a fast and flexible description of neutrino decoupling in the early universe following the momentum-averaged approach. Independent Mathematica and Python implementations are provided, and should be easy to link with other codes, e.g. for BBN. The latest version has been developed by M. Escudero, G. Jackson, M. Laine and S. Sandner in [2511.XXXXX](https://arxiv.org/abs/2511.XXXXX) and builds on the earlier v1 from M. Escudero in [1812.05605](https://arxiv.org/abs/1812.05605) and [2001.04466](https://arxiv.org/abs/2001.04466). 
 
 As of 07/11/2025:
 
