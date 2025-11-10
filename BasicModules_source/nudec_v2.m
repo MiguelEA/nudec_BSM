@@ -20,7 +20,7 @@
 
 
 (* ::Input::Initialization:: *)
-(* Code based on [XXXXX.XXXXX] by M.Escudero, G.Jackson, M.Laine and S.Sandner 
+(* Code based on [2511.04747] by M.Escudero, G.Jackson, M.Laine and S.Sandner 
 v1 from M.Escudero in [1812.05605] and [2001.04466] *)
 
 (* If not initialized set up to default values *)

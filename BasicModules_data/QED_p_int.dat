@@ -1,5 +1,5 @@
 # interacting QED pressure, [p^{(n)}] = MeV^4 (n = order of perturbative correction)
-# results from Escudero, Jackson, Laine and Sandner ArXiv:2511.XXXXX with me = 0.51099895 MeV, alpha = 1/137.035999084
+# results from Escudero, Jackson, Laine and Sandner ArXiv:2511.04747 with me = 0.51099895 MeV, alpha = 1/137.035999084
 # columns: T_ga [MeV],   p^{(0)},   p^{(2)non-log},   p^{(2)log},   p^{(3)},   p^{(4)},   p^{(5)}
  0.000000000000e+00   +0.000000000000e+00   +0.0000e+00   +0.0000e+00   +0.0000e+00   +0.0000e+00   +0.0000e+00
  5.000000000000e-03   +1.370778389040e-10   -5.0742e-56   +4.0922e-98   +5.3241e-76   -1.8375e-15   -2.4336e-16

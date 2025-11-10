@@ -1,5 +1,5 @@
 # second T derivative of pressure for QED , [d2p^{(n)}/dT2] = MeV^2 (n = order of perturbative correction)
-# results from Escudero, Jackson, Laine and Sandner ArXiv:2511.XXXXX with me = 0.51099895 MeV, alpha = 1/137.035999084
+# results from Escudero, Jackson, Laine and Sandner ArXiv:2511.04747 with me = 0.51099895 MeV, alpha = 1/137.035999084
 # columns: T_ga [MeV],   d2p^{(0)}/dT2,   d2p^{(2)non-log}/dT2,   d2p^{(2)log}/dT2,   d2p^{(3)}/dT2,   d2p^{(4)}/dT2,   d2p^{(5)}/dT2
  0.000000000000e+00   +0.000000000000e+00   +0.0000e+00   +0.0000e+00   +0.0000e+00   +0.0000e+00   +0.0000e+00
  5.000000000000e-03   +1.096622711232e-07   -2.2256e-47   +6.9058e-89   +3.4356e-67   -8.8202e-10   -1.1681e-10

@@ -113,7 +113,7 @@
 
   [Notes:]
 
-  Some comments below refer to specific places in ArXiv:2511.XXXXX
+  Some comments below refer to specific places in ArXiv:2511.04747
 
 """
 import os
