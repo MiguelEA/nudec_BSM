@@ -1125,7 +1125,7 @@ class NuDec:
                 return -g_internal*T**4*self.polylog.Li4(-np.exp(mu/T))/np.pi**2
             else:
                 if Bessel and mu/T<0.1:
-                    n = np.arange(1, NuDec_Const.BesselMax + 1)  # vectorized n = 1..n_max
+                    n = np.arange(1, NuDec_Const.Bessel_Max + 1)  # vectorized n = 1..n_max
                     term = -g_internal*(((-1)**n) * np.exp(n * mu / T) * m**2 * T**2 * kv(2, m * n / T)) / (2 * n**2 * np.pi**2)
                     return np.sum(term)
                 else:
@@ -1145,7 +1145,7 @@ class NuDec:
                 return -g_internal*T**3*self.polylog.Li3(-np.exp(mu/T))/np.pi**2 
             else:
                 if Bessel and mu/T<0.1:
-                    n       = np.arange(1, NuDec_Const.BesselMax + 1)  
+                    n       = np.arange(1, NuDec_Const.Bessel_Max + 1)  
                     term    = -g_internal*(((-1)**n) * np.exp(n * mu / T) * m**2 * T * kv(2, m * n / T)) / (2 * n * np.pi**2)
                     return np.sum(term)
                 else:
@@ -1166,7 +1166,7 @@ class NuDec:
                 return 3.*self.P_FD(T,mu,m,g_internal,Bessel)
             else:
                 if Bessel and mu/T<0.1:
-                    n = np.arange(1, NuDec_Const.BesselMax + 1)
+                    n = np.arange(1, NuDec_Const.Bessel_Max + 1)
                     x = m * n / T
                     term = -g_internal*(((-1)**n) * np.exp(n * mu / T) * m**2 * T *
                             (m * n * kv(1, x) + 3 * T * kv(2, x))) / (2 * n**2 * np.pi**2)
