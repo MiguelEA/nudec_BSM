@@ -1116,6 +1116,31 @@ class NuDec:
                 return 2*res*T**2
 
 
+
+        # general Fermi-Dirac/Bose-Einstein thermodynamics:
+
+        def nF(self, x: float) -> float:
+            """
+            nF(x) = 1/(e^x+1)
+            """
+            if x>0:
+                ex  = np.exp(-x)
+                den = 1.+ex
+                return ex/den
+            else:
+                return 1.-self.nF(-x)
+
+        def nB(self, x: float) -> float:
+            """
+            nB(x) = 1/(e^x-1)
+            """
+            if x>0:
+                ex  = np.exp(-x)
+                den = -np.expm1(-x)
+                return ex/den
+            else:
+                return -(1.+self.nB(-x))
+
         def P_FD(self, T: float, mu: float= 0, m: float= NuDec_Const.m_nu, g_internal: int= NuDec_Const.g_nu, Bessel: bool= True) -> float: 
             """
             pressure density of Fermi-Dirac species with g_internal degrees of freedom
@@ -1132,7 +1157,7 @@ class NuDec:
                     if Bessel and mu/T>=0.1:
                         warnings.warn("Bessel expansion requested in P_FD, but mu/T>0.1 for it is not convergent. " \
                                         "Fall back to numerical integration..", category=UserWarning, stacklevel=2)
-                    return g_internal*quad(lambda k: 1/(6*np.pi**2)*k**4/np.sqrt(k**2+m**2)*1/(np.exp( np.sqrt(k**2+m**2)/T - mu/T) + 1), 0, 25*T+mu)[0]
+                    return g_internal*quad(lambda k: 1/(6*np.pi**2)*k**4/np.sqrt(k**2+m**2)*self.nF(np.sqrt(k**2+m**2)/T - mu/T), 0, 25*T+mu)[0]
 
 
 
@@ -1152,7 +1177,7 @@ class NuDec:
                     if Bessel and mu/T>=0.1:
                         warnings.warn("Bessel expansion requested in n_FD, but mu/T>0.1 for it is not convergent. " \
                                         "Fall back to numerical integration..", category=UserWarning, stacklevel=2)
-                    return g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*1/(np.exp( np.sqrt(k**2+m**2)/T - mu/T) + 1), 0, 25*T+mu)[0]
+                    return g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*self.nF(np.sqrt(k**2+m**2)/T - mu/T), 0, 25*T+mu)[0]
 
 
 
@@ -1175,7 +1200,7 @@ class NuDec:
                     if Bessel and mu/T>=0.1:
                         warnings.warn("Bessel expansion requested in Rho_FD, but mu/T>0.1 for it is not convergent. " \
                                         "Fall back to numerical integration..", category=UserWarning, stacklevel=2)
-                    return g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*np.sqrt(k**2+m**2)*1/(np.exp( np.sqrt(k**2+m**2)/T - mu/T) + 1), 0, 25*T+mu)[0]
+                    return g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*np.sqrt(k**2+m**2)*self.nF(np.sqrt(k**2+m**2)/T - mu/T), 0, 25*T+mu)[0]
 
 
 
@@ -1185,6 +1210,97 @@ class NuDec:
             """
             return ( self.P_FD(T=T, mu=mu, m=m, g_internal= g_internal, Bessel= Bessel) + self.Rho_FD(T=T, mu=mu, m=m, g_internal= g_internal, Bessel= Bessel) - mu*self.n_FD(T=T, mu=mu, m=m, g_internal= g_internal, Bessel= Bessel) )/T
 
+
+        # !xz [
+        def P_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+            """
+            pressure density of Bose-Einstein species with g_internal degrees of freedom
+            """
+            lim_effectively_massless    = 1e-4
+            if m/T<lim_effectively_massless:
+                return g_internal*T**4*self.polylog.Li4(np.exp(mu/T))/np.pi**2
+            else:
+                return g_internal*quad(lambda k: 1/(6*np.pi**2)*k**4/np.sqrt(k**2+m**2)*self.nB(np.sqrt(k**2+m**2)/T - mu/T), 0, 25*T+mu)[0]
+
+
+
+        def n_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+            """
+            number density of Bose-Einstein species with g_internal degrees of freedom
+            """
+            lim_effectively_massless    = 1e-4
+            if m/T<lim_effectively_massless:
+                return g_internal*T**3*self.polylog.Li3(np.exp(mu/T))/np.pi**2 
+            else:
+                return g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*self.nB(np.sqrt(k**2+m**2)/T - mu/T), 0, 25*T+mu)[0]
+
+
+
+        def Rho_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+            """
+            pressure density of Bose-Einstein species with g_internal degrees of freedom
+            """
+            lim_effectively_massless    = 1e-4
+            if m/T<lim_effectively_massless:
+                return 3.*self.P_BE(T,mu,m,g_internal,Bessel)
+            else:
+                if m>mu:
+                    return g_internal*quad(lambda E: 1/(2*np.pi**2)*E**2*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), m, m+25*T+mu)[0]
+                else:
+                    #NB: if mu>m, need to carefully take P.V. integral:
+                    return g_internal*quad(lambda E: 1/(2*np.pi**2)*E**2*np.sqrt(E**2-m**2)*( self.nB(E/T - mu/T) - T/(E-mu) ), m, 2*mu-m)[0]+g_internal*quad(lambda E: 1/(2*np.pi**2)*E**2*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), 2*mu-m, 2*mu-m+25*T+mu)[0]
+
+        def s_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+            """
+            entropy density of Bose-Einstein particle
+            """
+            return ( self.P_BE(T=T, mu=mu, m=m, g_internal= g_internal, Bessel= Bessel) + self.Rho_BE(T=T, mu=mu, m=m, g_internal= g_internal, Bessel= Bessel) - mu*self.n_BE(T=T, mu=mu, m=m, g_internal= g_internal, Bessel= Bessel) )/T
+
+
+
+        def dn_dT_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+            """
+            dn/dT
+            """
+            lim_effectively_massless    = 1e-4
+            if m/T<lim_effectively_massless:
+                return g_internal*T*( 3*T*self.polylog.Li3(np.exp(mu/T)) - mu*self.polylog.Li2(np.exp(mu/T)) )/np.pi**2
+            else:
+                return (1./T)*g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*(np.sqrt(k**2+m**2)/T-mu/T)*self.nB(np.sqrt(k**2+m**2)/T - mu/T)*(1.+self.nB(np.sqrt(k**2+m**2)/T - mu/T)), 0, 25*T+mu)[0]
+
+        def dn_dmu_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+            """
+            dn/dmu
+            """
+            lim_effectively_massless    = 1e-4
+            if m/T<lim_effectively_massless:
+                return g_internal*T*2*self.polylog.Li2(np.exp(mu/T))/np.pi**2
+            else:
+                return (1./T)*g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*self.nB(np.sqrt(k**2+m**2)/T - mu/T)*(1.+self.nB(np.sqrt(k**2+m**2)/T - mu/T)), 0, 25*T+mu)[0]
+
+
+        def dRho_dT_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+            """
+            dRho/dT
+            """
+            lim_effectively_massless    = 1e-4
+            if m/T<lim_effectively_massless:
+                return g_internal*3*T**2*( 4*T*self.polylog.Li4(np.exp(mu/T)) - mu*self.polylog.Li3(np.exp(mu/T)) )/np.pi**2
+            else:
+                return (1/T)*g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*np.sqrt(k**2+m**2)*( np.sqrt(k**2+m**2)/T-mu/T)*self.nB(np.sqrt(k**2+m**2)/T - mu/T)*(1.+self.nB(np.sqrt(k**2+m**2)/T - mu/T)), 0, 25*T+mu)[0]
+
+
+        def dRho_dmu_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+            """
+            dRho/dmu
+            """
+            lim_effectively_massless    = 1e-4
+            if m/T<lim_effectively_massless:
+                return g_internal*3*T**3*self.polylog.Li3(np.exp(mu/T))/np.pi**2
+            else:
+                return (1/T)*g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*np.sqrt(k**2+m**2)*self.nB(np.sqrt(k**2+m**2)/T - mu/T)*(1.+self.nB(np.sqrt(k**2+m**2)/T - mu/T)), 0, 25*T+mu)[0]
+
+        # !xz ]
 
         # thermodynamics for neutrinos, cf. table V
         def dn_dT_nu(self, T: float, mu: float= 0) -> float:
