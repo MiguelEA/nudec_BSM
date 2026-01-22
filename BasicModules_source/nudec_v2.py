@@ -178,6 +178,12 @@ class NuDec_Const:
     # set path to current working directory 
     cwd         = os.getcwd()
 
+    # !xz [
+    g_phi      = 1
+    lambda_phi = 1e-11
+    m_phi      = 1e-2
+    # !xz ]
+
 
 
 
@@ -1134,7 +1140,9 @@ class NuDec:
             """
             nB(x) = 1/(e^x-1)
             """
-            if x>0:
+            if abs(x)<1e-5:
+                return 1./x
+            elif x>0:
                 ex  = np.exp(-x)
                 den = -np.expm1(-x)
                 return ex/den
@@ -1248,7 +1256,11 @@ class NuDec:
                     return g_internal*quad(lambda E: 1/(2*np.pi**2)*E**2*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), m, m+25*T+mu)[0]
                 else:
                     #NB: if mu>m, need to carefully take P.V. integral:
-                    return g_internal*quad(lambda E: 1/(2*np.pi**2)*E**2*np.sqrt(E**2-m**2)*( self.nB(E/T - mu/T) - T/(E-mu) ), m, 2*mu-m)[0]+g_internal*quad(lambda E: 1/(2*np.pi**2)*E**2*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), 2*mu-m, 2*mu-m+25*T+mu)[0]
+                    mumm = mu-m
+                    mupm = mu+m
+                    subtr = (mu**3*np.log((m - 2*(mu + np.sqrt(mu*mumm)))/(m - 2*mu + 2*np.sqrt(mu*mumm))))/2. - (m**2*mu*np.log(-1 + (2*(mu + np.sqrt(mu*mumm)))/m))/2. + (mu**1.5*np.sqrt(mumm)*(-11*m + 20*mu - (3*np.sqrt(mu*mupm)*np.log((m + 2*(mu + np.sqrt(mu*mupm)))/(m + 2*mu - 2*np.sqrt(mu*mupm))))/2.) )/3. 
+                    integral = quad(lambda E: E**2*np.sqrt(E**2-m**2)*( self.nB(E/T - mu/T) - T/(E-mu) ), m, mu-1e-5)[0]+quad(lambda E: E**2*np.sqrt(E**2-m**2)*( self.nB(E/T - mu/T) - T/(E-mu) ), mu+1e-5, 2*mu-m)[0]+quad(lambda E: E**2*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), 2*mu-m, 2*mu-m+25*T+mu)[0]
+                    return g_internal*(integral+subtr)/(2*np.pi**2)
 
         def s_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
             """
