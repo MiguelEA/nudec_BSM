@@ -1220,7 +1220,7 @@ class NuDec:
 
 
         # !xz [
-        def P_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+        def P_BE(self, T: float, mu: float= 0, m: float= 0., g_internal: int= 1., Bessel: bool= True) -> float: 
             """
             pressure density of Bose-Einstein species with g_internal degrees of freedom
             """
@@ -1228,11 +1228,22 @@ class NuDec:
             if m/T<lim_effectively_massless:
                 return g_internal*T**4*self.polylog.Li4(np.exp(mu/T))/np.pi**2
             else:
-                return g_internal*quad(lambda k: 1/(6*np.pi**2)*k**4/np.sqrt(k**2+m**2)*self.nB(np.sqrt(k**2+m**2)/T - mu/T), 0, 25*T+mu)[0]
+                if m>mu:
+                    return g_internal*quad(lambda E: 1/(6*np.pi**2)*(E**2-m**2)**1.5*self.nB(E/T - mu/T), m, m+25*T+mu)[0]
+                else:
+                    #NB: if mu>m, need to carefully take P.V. integral:
+                    # (split [m,+inf) into [m,2*mu-m] + [2*mu-m,+inf). On [m,2*mu-m], explicitly subtract the T/(E-mu) piece
+                    #  so that the integrals converge. Compute this subtracted P.V. piece analytically, and add it back)
+                    mumm = mu-m
+                    mupm = mu+m
+                    subtr = ((2*mu*(6*m**3 + 5*m**2*mu - 31*m*mu**2 + 20*mu**3))/np.sqrt(mu*mumm) + 3*mu*(-m**2 + mu**2)*np.log((m - 2*(mu + np.sqrt(mu*mumm)))/(m - 2*mu + 2*np.sqrt(mu*mumm))) - 3*m**2*mu*np.log(-1 + (2*(mu + np.sqrt(mu*mumm)))/m) - 3*(-m**2 + mu**2)**1.5*np.log((m + 2*(mu + np.sqrt(mu*mupm)))/(m + 2*mu - 2*np.sqrt(mu*mupm))))/6.
+                    integral = quad(lambda E: (E**2-m**2)**1.5*( self.nB(E/T - mu/T) - T/(E-mu) ), m, mu-1e-5)[0]+quad(lambda E: (E**2-m**2)**1.5*( self.nB(E/T - mu/T) - T/(E-mu) ), mu+1e-5, 2*mu-m)[0]+quad(lambda E: (E**2-m**2)**1.5*self.nB(E/T - mu/T), 2*mu-m, 2*mu-m+25*T+mu)[0]
+                    return g_internal*(integral+subtr)/(6*np.pi**2)
 
 
 
-        def n_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+
+        def n_BE(self, T: float, mu: float= 0, m: float= 0., g_internal: int= 1., Bessel: bool= True) -> float: 
             """
             number density of Bose-Einstein species with g_internal degrees of freedom
             """
@@ -1240,11 +1251,20 @@ class NuDec:
             if m/T<lim_effectively_massless:
                 return g_internal*T**3*self.polylog.Li3(np.exp(mu/T))/np.pi**2 
             else:
-                return g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*self.nB(np.sqrt(k**2+m**2)/T - mu/T), 0, 25*T+mu)[0]
+                if m>mu:
+                    return g_internal*quad(lambda E: 1/(2*np.pi**2)*E*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), m, m+25*T+mu)[0]
+                else:
+                    #NB: if mu>m, need to carefully take P.V. integral: (see P_BE for approach)
+                    mumm = mu-m
+                    mupm = mu+m
+                    subtr = -(m*np.sqrt(mu*mumm)) + 4*np.sqrt(mu**3*mumm) - (m**2*np.log(-1 + (2*(mu + np.sqrt(mu*mumm)))/m))/2. + (mu*(mu*np.log((m - 2*(mu + np.sqrt(mu*mumm)))/(m - 2*mu + 2*np.sqrt(mu*mumm))) - np.sqrt(-m**2 + mu**2)*np.log((m + 2*(mu + np.sqrt(mu*mupm)))/(m + 2*mu - 2*np.sqrt(mu*mupm)))))/2.
+                    integral = quad(lambda E: E*np.sqrt(E**2-m**2)*( self.nB(E/T - mu/T) - T/(E-mu) ), m, mu-1e-5)[0]+quad(lambda E: E*np.sqrt(E**2-m**2)*( self.nB(E/T - mu/T) - T/(E-mu) ), mu+1e-5, 2*mu-m)[0]+quad(lambda E: E*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), 2*mu-m, 2*mu-m+25*T+mu)[0]
+                    return g_internal*(integral+subtr)/(2*np.pi**2)
 
 
 
-        def Rho_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+
+        def Rho_BE(self, T: float, mu: float= 0, m: float= 0., g_internal: int= 1., Bessel: bool= True) -> float: 
             """
             pressure density of Bose-Einstein species with g_internal degrees of freedom
             """
@@ -1255,7 +1275,7 @@ class NuDec:
                 if m>mu:
                     return g_internal*quad(lambda E: 1/(2*np.pi**2)*E**2*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), m, m+25*T+mu)[0]
                 else:
-                    #NB: if mu>m, need to carefully take P.V. integral:
+                    #NB: if mu>m, need to carefully take P.V. integral: (see P_BE for approach)
                     mumm = mu-m
                     mupm = mu+m
                     subtr = (mu**3*np.log((m - 2*(mu + np.sqrt(mu*mumm)))/(m - 2*mu + 2*np.sqrt(mu*mumm))))/2. - (m**2*mu*np.log(-1 + (2*(mu + np.sqrt(mu*mumm)))/m))/2. + (mu**1.5*np.sqrt(mumm)*(-11*m + 20*mu - (3*np.sqrt(mu*mupm)*np.log((m + 2*(mu + np.sqrt(mu*mupm)))/(m + 2*mu - 2*np.sqrt(mu*mupm))))/2.) )/3. 
@@ -1270,7 +1290,7 @@ class NuDec:
 
 
 
-        def dn_dT_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+        def dn_dT_BE(self, T: float, mu: float= 0, m: float= 0., g_internal: int= 1., Bessel: bool= True) -> float: 
             """
             dn/dT
             """
@@ -1280,7 +1300,7 @@ class NuDec:
             else:
                 return (1./T)*g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*(np.sqrt(k**2+m**2)/T-mu/T)*self.nB(np.sqrt(k**2+m**2)/T - mu/T)*(1.+self.nB(np.sqrt(k**2+m**2)/T - mu/T)), 0, 25*T+mu)[0]
 
-        def dn_dmu_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+        def dn_dmu_BE(self, T: float, mu: float= 0, m: float= 0., g_internal: int= 1., Bessel: bool= True) -> float: 
             """
             dn/dmu
             """
@@ -1291,7 +1311,7 @@ class NuDec:
                 return (1./T)*g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*self.nB(np.sqrt(k**2+m**2)/T - mu/T)*(1.+self.nB(np.sqrt(k**2+m**2)/T - mu/T)), 0, 25*T+mu)[0]
 
 
-        def dRho_dT_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+        def dRho_dT_BE(self, T: float, mu: float= 0, m: float= 0., g_internal: int= 1., Bessel: bool= True) -> float: 
             """
             dRho/dT
             """
@@ -1302,7 +1322,7 @@ class NuDec:
                 return (1/T)*g_internal*quad(lambda k: 1/(2*np.pi**2)*k**2*np.sqrt(k**2+m**2)*( np.sqrt(k**2+m**2)/T-mu/T)*self.nB(np.sqrt(k**2+m**2)/T - mu/T)*(1.+self.nB(np.sqrt(k**2+m**2)/T - mu/T)), 0, 25*T+mu)[0]
 
 
-        def dRho_dmu_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+        def dRho_dmu_BE(self, T: float, mu: float= 0, m: float= 0., g_internal: int= 1., Bessel: bool= True) -> float: 
             """
             dRho/dmu
             """
