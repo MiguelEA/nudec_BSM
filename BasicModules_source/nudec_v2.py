@@ -178,12 +178,6 @@ class NuDec_Const:
     # set path to current working directory 
     cwd         = os.getcwd()
 
-    # !xz [
-    g_phi      = 1
-    lambda_phi = 1e-11
-    m_phi      = 1e-2
-    # !xz ]
-
 
 
 
@@ -1228,7 +1222,11 @@ class NuDec:
             if m/T<lim_effectively_massless:
                 return g_internal*T**4*self.polylog.Li4(np.exp(mu/T))/np.pi**2
             else:
-                if m>mu:
+                if Bessel and m>mu:
+                    n = np.arange(1, NuDec_Const.Bessel_Max + 1)  # vectorized n = 1..n_max
+                    term = g_internal*( np.exp(n * mu / T) * m**2 * T**2 * kv(2, m * n / T)) / (2 * n**2 * np.pi**2)
+                    return np.sum(term)
+                elif m>mu:
                     return g_internal*quad(lambda E: 1/(6*np.pi**2)*(E**2-m**2)**1.5*self.nB(E/T - mu/T), m, m+25*T+mu)[0]
                 else:
                     #NB: if mu>m, need to carefully take P.V. integral:
@@ -1251,7 +1249,11 @@ class NuDec:
             if m/T<lim_effectively_massless:
                 return g_internal*T**3*self.polylog.Li3(np.exp(mu/T))/np.pi**2 
             else:
-                if m>mu:
+                if Bessel and m>mu:
+                    n       = np.arange(1, NuDec_Const.Bessel_Max + 1)  
+                    term    = g_internal*( np.exp(n * mu / T) * m**2 * T * kv(2, m * n / T)) / (2 * n * np.pi**2)
+                    return np.sum(term)
+                elif m>mu:
                     return g_internal*quad(lambda E: 1/(2*np.pi**2)*E*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), m, m+25*T+mu)[0]
                 else:
                     #NB: if mu>m, need to carefully take P.V. integral: (see P_BE for approach)
@@ -1272,6 +1274,12 @@ class NuDec:
             if m/T<lim_effectively_massless:
                 return 3.*self.P_BE(T,mu,m,g_internal,Bessel)
             else:
+                if Bessel and m>mu:
+                    n = np.arange(1, NuDec_Const.Bessel_Max + 1)
+                    x = m * n / T
+                    term = g_internal*( np.exp(n * mu / T) * m**2 * T *
+                            (m * n * kv(1, x) + 3 * T * kv(2, x))) / (2 * n**2 * np.pi**2)
+                    return np.sum(term)
                 if m>mu:
                     return g_internal*quad(lambda E: 1/(2*np.pi**2)*E**2*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), m, m+25*T+mu)[0]
                 else:
@@ -1282,7 +1290,7 @@ class NuDec:
                     integral = quad(lambda E: E**2*np.sqrt(E**2-m**2)*( self.nB(E/T - mu/T) - T/(E-mu) ), m, mu-1e-5)[0]+quad(lambda E: E**2*np.sqrt(E**2-m**2)*( self.nB(E/T - mu/T) - T/(E-mu) ), mu+1e-5, 2*mu-m)[0]+quad(lambda E: E**2*np.sqrt(E**2-m**2)*self.nB(E/T - mu/T), 2*mu-m, 2*mu-m+25*T+mu)[0]
                     return g_internal*(integral+subtr)/(2*np.pi**2)
 
-        def s_BE(self, T: float, mu: float= 0, m: float= NuDec_Const.m_phi, g_internal: int= NuDec_Const.g_phi, Bessel: bool= True) -> float: 
+        def s_BE(self, T: float, mu: float= 0, m: float= 0., g_internal: int= 1., Bessel: bool= True) -> float: 
             """
             entropy density of Bose-Einstein particle
             """
