@@ -213,8 +213,6 @@ class NuDec:
         T_gam, T_nue, T_numu, z  = y #unpack
         mu_nu       = 0
 
-        H           = self.Hubble(T_gam=T_gam, T_nue=T_nue, T_numu=T_numu, mu_nue=mu_nu, mu_numu=mu_nu, me=me, order=order, mpl=mpl, e=e)
-
         Rho_QED    = self.thermo.Rho_QED_int(T=T_gam, m=me, order=order, e=e)
         P_QED      = self.thermo.P_QED_int(T=T_gam, m=me, order=order, e=e)
         dRhodt_QED  = 2.*self.rates.DeltaRho_numu(T_gam=T_gam, T_nue=T_nue, T_numu=T_numu, mu_nue=mu_nu, mu_numu=mu_nu, me=me, gmuL=gmuL, gmuR=gmuR, GF=GF) \
@@ -227,7 +225,7 @@ class NuDec:
         Rho_mu       = 2*self.thermo.Rho_FD(T=T_numu, mu=mu_nu)
         dRhodT_mu    = 2*3.*self.thermo.dP_dT_nu(T=T_numu, mu=mu_nu)
         dRhodt_mu    = 2*self.rates.DeltaRho_numu(T_gam=T_gam, T_nue=T_nue, T_numu=T_numu, mu_nue=mu_nu, mu_numu=mu_nu, me=me, gmuL=gmuL, gmuR=gmuR, GF=GF)
-
+        H           = self.Hubble(rho_t=Rho_QED+Rho_e+Rho_mu)
 
         dTgam_dt    = (-3.*H*( Rho_QED + P_QED) - dRhodt_QED) / (T_gam*self.thermo.d2P_dT2_QED(T=T_gam, m=me, order=order, e=e)) 
         dTnue_dt    = (-4.*H*Rho_e + dRhodt_e)/(dRhodT_e)
@@ -246,7 +244,6 @@ class NuDec:
 
         T_gam, T_nue, T_numu, mu_nue, mu_numu, z  = y #unpack
 
-        H           = self.Hubble(T_gam=T_gam, T_nue=T_nue, T_numu=T_numu, mu_nue=mu_nue, mu_numu=mu_numu, me=me, order=order, mpl=mpl, e=e)
 
         Rho_QED     = self.thermo.Rho_QED_int(T=T_gam, m=me, order=order, e=e)
         P_QED       = self.thermo.P_QED_int(T=T_gam, m=me, order=order, e=e)
@@ -274,6 +271,7 @@ class NuDec:
         dRhodt_mu   = 2.*self.rates.DeltaRho_numu(T_gam=T_gam, T_nue=T_nue, T_numu=T_numu, mu_nue=mu_nue, mu_numu=mu_numu, me=me, gmuL=gmuL, gmuR=gmuR, GF=GF)
         dndt_mu     = 2.*self.rates.DeltaN_numu(T_gam=T_gam, T_nue=T_nue, T_numu=T_numu, mu_nue=mu_nue, mu_numu=mu_numu, me=me, gmuL=gmuL, gmuR=gmuR, GF=GF)
 
+        H           = self.Hubble(rho_t=Rho_QED+Rho_e+Rho_mu)
 
 
         dTgam_dt    = (-3.*H*( Rho_QED + P_QED) - dRhodt_QED) / (T_gam*self.thermo.d2P_dT2_QED(T=T_gam, m=me, order=order, e=e))
@@ -298,7 +296,6 @@ class NuDec:
         T_gam, T_nu, z  = y  # unpack array
         mu_nu       = 0
 
-        H           = self.Hubble(T_gam=T_gam, T_nue=T_nu, T_numu=T_nu, mu_nue=mu_nu, mu_numu=mu_nu, me=me, order=order, mpl=mpl, e=e)
 
         Rho_QED    = self.thermo.Rho_QED_int(T=T_gam, m=me, order=order, e=e)
         P_QED      = self.thermo.P_QED_int(T=T_gam, m=me, order=order, e=e)
@@ -311,6 +308,7 @@ class NuDec:
         dRhodt      = 2.*self.rates.DeltaRho_numu(T_gam=T_gam, T_nue=T_nu, T_numu=T_nu, mu_nue=mu_nu, mu_numu=mu_nu, me=me, gmuL=gmuL, gmuR=gmuR, GF=GF) \
                     +self.rates.DeltaRho_nue(T_gam=T_gam, T_nue=T_nu, T_numu=T_nu, mu_nue=mu_nu, mu_numu=mu_nu, me=me, geL=geL, geR=geR, GF=GF)
 
+        H           = self.Hubble(rho_t=Rho_QED+Rho)
 
         dTgam_dt    = (-3.*H*( Rho_QED + P_QED) - dRhodt) / (T_gam*self.thermo.d2P_dT2_QED(T=T_gam, m=me, order=order, e=e)) 
         dTnu_dt     = - H*T_nu + dRhodt/dRhodT
@@ -329,7 +327,6 @@ class NuDec:
 
         T_gam, T_nu, mu_nu, z  = y  # unpack array
 
-        H           = self.Hubble(T_gam=T_gam, T_nue=T_nu, T_numu=T_nu, mu_nue=mu_nu, mu_numu=mu_nu, me=me, order=order, mpl=mpl, e=e)
 
         Rho_QED    = self.thermo.Rho_QED_int(T=T_gam, m=me, order=order, e=e)
         P_QED      = self.thermo.P_QED_int(T=T_gam, m=me, order=order, e=e)
@@ -348,7 +345,7 @@ class NuDec:
         dndt        = 2.*self.rates.DeltaN_numu(T_gam=T_gam, T_nue=T_nu, T_numu=T_nu, mu_nue=mu_nu, mu_numu=mu_nu, me=me, gmuL=gmuL, gmuR=gmuR, GF=GF) \
                     +self.rates.DeltaN_nue(T_gam=T_gam, T_nue=T_nu, T_numu=T_nu, mu_nue=mu_nu, mu_numu=mu_nu, me=me, geL=geL, geR=geR, GF=GF)
 
-
+        H           = self.Hubble(rho_t=Rho_QED+Rho)
 
         dTgam_dt    = (-3.*H*( Rho_QED + P_QED ) - dRhodt) / (T_gam*self.thermo.d2P_dT2_QED(T=T_gam, m=me, order=order, e=e))
         dTnu_dt     = (-3.*H*( (Rho+P)*dndmu - n*dRhodmu )  + dndmu*dRhodt - dRhodmu*dndt ) / (dndmu*dRhodT - dndT*dRhodmu )
@@ -374,8 +371,10 @@ class NuDec:
             order = NuDec_Const.order
 
 
-        t_ini = 1./(2*self.Hubble(T_gam=T_ini, T_nue=T_ini, T_numu=T_ini, mu_nue=0, mu_numu=0, me=me, order=order, mpl=mpl, e=e))
-        t_fin = 1./(2*self.Hubble(T_gam=T_fin, T_nue=T_fin/1.4, T_numu=T_fin/1.4, mu_nue=0, mu_numu=0, me=me, order=order, mpl=mpl, e=e)) # estimated
+        Rho_tot_ini = self.thermo.Rho_tot(T_gam=T_ini, T_nue=T_ini, T_numu=T_ini, mu_nue=0, mu_numu=0, me=me, order=order, e=e)
+        Rho_tot_fin = self.thermo.Rho_tot(T_gam=T_fin, T_nue=T_fin/1.4, T_numu=T_fin/1.4, mu_nue=0, mu_numu=0, me=me, order=order, e=e)
+        t_ini = 1./(2*self.Hubble(Rho_tot_ini, mpl=mpl, e=e))
+        t_fin = 1./(2*self.Hubble(Rho_tot_fin, mpl=mpl, e=e)) # estimated
 
         if info:
             print(f"\n solve system from T_ini = {T_ini:.3f} to T_fin = {T_fin:.3f} [MeV]")
@@ -478,11 +477,11 @@ class NuDec:
 
 
     # Hubble expansion rate:
-    def Hubble(self, T_gam: float, T_nue: float, T_numu: float, mu_nue: float, mu_numu: float, me: float= NuDec_Const.me, order: int= NuDec_Const.order, mpl: float= NuDec_Const.mpl, e: float= NuDec_Const.e) -> float:
+    def Hubble(self, rho_t: float, mpl: float= NuDec_Const.mpl, e: float= NuDec_Const.e) -> float:
         """ 
         expansion rate from energy density: cf. eq.(2.7)
         """
-        return NuDec_Const.MeVtoSec*np.sqrt(self.thermo.Rho_tot(T_gam=T_gam, T_nue=T_nue, T_numu=T_numu, mu_nue=mu_nue, mu_numu=mu_numu, me=me, order=order, e=e)*8*np.pi/(3*mpl**2))
+        return NuDec_Const.MeVtoSec*np.sqrt(rho_t*8*np.pi/(3*mpl**2))
 
 
 
