@@ -176,8 +176,7 @@ class NuDec_Const:
     tau_max_sf_series = 30
 
     # set path to current working directory 
-    cwd         = os.getcwd()
-
+    cwd         = os.path.dirname(os.path.dirname(__file__))
 
 
 

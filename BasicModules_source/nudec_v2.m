@@ -20,7 +20,16 @@
 
 
 (* ::Input::Initialization:: *)
-(* Code based on [2511.04747] by M.Escudero, G.Jackson, M.Laine and S.Sandner 
+(* This is needed so that the .m file can be called from any directory and not have any directory issues. *)
+packageDir=DirectoryName[$InputFileName];
+(* packageDir=NotebookDirectory[];
+If this is uncommented then the file can be loaded locally and one can explicitly tests the various functions.
+*)
+dataFile[name_]:=FileNameJoin[{packageDir,"..","BasicModules_data",name}];
+
+
+(* ::Input::Initialization:: *)
+(* Code based on [XXXXX.XXXXX] by M.Escudero, G.Jackson, M.Laine and S.Sandner 
 v1 from M.Escudero in [1812.05605] and [2001.04466] *)
 
 (* If not initialized set up to default values *)
@@ -60,39 +69,39 @@ d2PintdT2[T_]:=0;
 (* Just load and interpolate the tabulated functions from the file *)
 SetDirectory[NotebookDirectory[]];
 
-If[orderQED!=0&&6>=orderQED>=2&&orderQED\[Element]Integers&&FileExistsQ["BasicModules_data/QED_p_int.dat"]==True,
+If[orderQED!=0&&6>=orderQED>=2&&orderQED\[Element]Integers&&FileExistsQ[dataFile["QED_p_int.dat"]]==True,
 
 ClearAll[Pintinterpol,dPintdTinterpol,d2PintdT2interpol];
 ClearAll[Pint,dPintdT,d2PintdT2];
 
 If[orderQED==2,
-Pintinterpol=Interpolation[{#[[1]],#[[3]]}&/@Import["BasicModules_data/QED_p_int.dat","Table",HeaderLines-> 3]];
-dPintdTinterpol=Interpolation[{#[[1]],#[[3]]}&/@Import["BasicModules_data/QED_dp_dT_int.dat","Table",HeaderLines-> 3]];
-d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]}&/@Import["BasicModules_data/QED_d2p_dT2_int.dat","Table",HeaderLines-> 3]];
+Pintinterpol=Interpolation[{#[[1]],#[[3]]}&/@Import[dataFile["QED_p_int.dat"],"Table",HeaderLines-> 3]];
+dPintdTinterpol=Interpolation[{#[[1]],#[[3]]}&/@Import[dataFile["QED_dp_dT_int.dat"],"Table",HeaderLines-> 3]];
+d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]}&/@Import[dataFile["QED_d2p_dT2_int.dat"],"Table",HeaderLines-> 3]];
 ];
 
 If[orderQED==3,
-Pintinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]}&/@Import["BasicModules_data/QED_p_int.dat","Table",HeaderLines-> 3]];
-dPintdTinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]}&/@Import["BasicModules_data/QED_dp_dT_int.dat","Table",HeaderLines-> 3]];
-d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]+#[[5]]}&/@Import["BasicModules_data/QED_d2p_dT2_int.dat","Table",HeaderLines-> 3]];
+Pintinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]}&/@Import[dataFile["QED_p_int.dat"],"Table",HeaderLines-> 3]];
+dPintdTinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]}&/@Import[dataFile["QED_dp_dT_int.dat"],"Table",HeaderLines-> 3]];
+d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]+#[[5]]}&/@Import[dataFile["QED_d2p_dT2_int.dat"],"Table",HeaderLines-> 3]];
 ];
 
 If[orderQED==4,
-Pintinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]}&/@Import["BasicModules_data/QED_p_int.dat","Table",HeaderLines-> 3]];
-dPintdTinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]}&/@Import["BasicModules_data/QED_dp_dT_int.dat","Table",HeaderLines-> 3]];
-d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]}&/@Import["BasicModules_data/QED_d2p_dT2_int.dat","Table",HeaderLines-> 3]];
+Pintinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]}&/@Import[dataFile["QED_p_int.dat"],"Table",HeaderLines-> 3]];
+dPintdTinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]}&/@Import[dataFile["QED_dp_dT_int.dat"],"Table",HeaderLines-> 3]];
+d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]}&/@Import[dataFile["QED_d2p_dT2_int.dat"],"Table",HeaderLines-> 3]];
 ];
 
 If[orderQED==5,
-Pintinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]+#[[7]]}&/@Import["BasicModules_data/QED_p_int.dat","Table",HeaderLines-> 3]];
-dPintdTinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]+#[[7]]}&/@Import["BasicModules_data/QED_dp_dT_int.dat","Table",HeaderLines-> 3]];
-d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]+#[[7]]}&/@Import["BasicModules_data/QED_d2p_dT2_int.dat","Table",HeaderLines-> 3]];
+Pintinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]+#[[7]]}&/@Import[dataFile["QED_p_int.dat"],"Table",HeaderLines-> 3]];
+dPintdTinterpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]+#[[7]]}&/@Import[dataFile["QED_dp_dT_int.dat"],"Table",HeaderLines-> 3]];
+d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]+#[[5]]+#[[6]]+#[[7]]}&/@Import[dataFile["QED_d2p_dT2_int.dat"],"Table",HeaderLines-> 3]];
 ];
 
 If[orderQED==6,
-Pintinterpol=Interpolation[{#[[1]],#[[3]]+#[[4]]+#[[5]]+#[[6]]+#[[7]]}&/@Import["BasicModules_data/QED_p_int.dat","Table",HeaderLines-> 3]];
-dPintdTinterpol=Interpolation[{#[[1]],#[[3]]+#[[4]]+#[[5]]+#[[6]]+#[[7]]}&/@Import["BasicModules_data/QED_dp_dT_int.dat","Table",HeaderLines-> 3]];
-d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]+#[[4]]+#[[5]]+#[[6]]+#[[7]]}&/@Import["BasicModules_data/QED_d2p_dT2_int.dat","Table",HeaderLines-> 3]];
+Pintinterpol=Interpolation[{#[[1]],#[[3]]+#[[4]]+#[[5]]+#[[6]]+#[[7]]}&/@Import[dataFile["QED_p_int.dat"],"Table",HeaderLines-> 3]];
+dPintdTinterpol=Interpolation[{#[[1]],#[[3]]+#[[4]]+#[[5]]+#[[6]]+#[[7]]}&/@Import[dataFile["QED_dp_dT_int.dat"],"Table",HeaderLines-> 3]];
+d2PintdT2interpol=Interpolation[{#[[1]],#[[3]]+#[[4]]+#[[5]]+#[[6]]+#[[7]]}&/@Import[dataFile["QED_d2p_dT2_int.dat"],"Table",HeaderLines-> 3]];
 ];
 
 Pint[TTT_]:=Piecewise[{{Pintinterpol[TTT],5 10^-3<=TTT<=39.99}},0];
@@ -211,8 +220,8 @@ d2PintdT2[T\[Gamma]_]:=2T\[Gamma]^2 ( G22[me/T\[Gamma]]+G23[me/T\[Gamma]]+G24[me
 ClearAll[dataRates];
 SetDirectory[NotebookDirectory[]];
 
-If[FileExistsQ["BasicModules_data/rate_coefficients_neutrinos.dat"]==True,
-dataRates=Import["BasicModules_data/rate_coefficients_neutrinos.dat","Table",HeaderLines->3];
+If[FileExistsQ[dataFile["rate_coefficients_neutrinos.dat"]]==True,
+dataRates=Import[dataFile["rate_coefficients_neutrinos.dat"],"Table",HeaderLines->3];
 interpolOrder=1;
 ClearAll[fa1func,fa2func,fa3func,fa4func,fs1func,fs2func,fs3func,fs4func,fn1func,fn2func,fn3func,fn4func];
 fa1func=Interpolation[Thread[{dataRates[[All,1]],dataRates[[All,2]]}],InterpolationOrder->interpolOrder];

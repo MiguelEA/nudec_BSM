@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    163997,       4247]
-NotebookOptionsPosition[    161638,       4195]
-NotebookOutlinePosition[    162138,       4214]
-CellTagsIndexPosition[    162095,       4211]
+NotebookDataLength[    166807,       4302]
+NotebookOptionsPosition[    164291,       4246]
+NotebookOutlinePosition[    164781,       4265]
+CellTagsIndexPosition[    164738,       4262]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -22,14 +22,7 @@ Cell[BoxData[
  RowBox[{"Quit", "[", "]"}]], "Input",
  CellChangeTimes->{{3.960535490341683*^9, 3.960535491727968*^9}, {
   3.971396946078047*^9, 3.971396946571454*^9}},
- CellLabel->
-  "In[124]:=",ExpressionUUID->"7f5e2c81-1d05-48cb-a770-61316a7686e8"],
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"SetDirectory", "[", 
-   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",
- CellLabel->"In[62]:=",ExpressionUUID->"22ae96b9-f16e-4842-b297-23a39bb4155a"],
+ CellLabel->"In[15]:=",ExpressionUUID->"7f5e2c81-1d05-48cb-a770-61316a7686e8"],
 
 Cell[TextData[{
  "This notebook contains the main modules that are common to all SM and BSM \
@@ -65,7 +58,12 @@ for them.\n4) Relevant thermodynamic formulae for n, \[Rho], p and their \
 derivatives for particles following FD and BE statistics.\n\tThe formulae for \
 massive ones have been written by default as sum of Bessel integrals.\n\nWe \
 note that all dimensionful variables are in MeV but the rates, Hubble and t \
-which are in seconds. "
+which are in seconds. \n\nNote: this file is used to generate the .m file \
+correctly. If you want to load the files locally on this notebook, then you \
+should go to \[OpenCurlyDoubleQuote]To get the correct .m file\
+\[CloseCurlyDoubleQuote] and uncomment the line \
+\[OpenCurlyDoubleQuote]packageDir = NotebookDirectory[]\
+\[CloseCurlyDoubleQuote]."
 }], "Text",
  InitializationCell->True,
  CellChangeTimes->{{3.770023972949883*^9, 3.770023980572762*^9}, {
@@ -87,8 +85,9 @@ which are in seconds. "
    3.787647083029048*^9, 3.787647093226407*^9}, 3.964151243418269*^9, {
    3.966997952661846*^9, 3.966998175085945*^9}, {3.966998902025764*^9, 
    3.9669989139640923`*^9}, 3.9669991222992973`*^9, {3.969877985481907*^9, 
-   3.9698779881282797`*^9}, {3.971750000815803*^9, 
-   3.971750008839031*^9}},ExpressionUUID->"4957d546-66ac-4497-a8b2-\
+   3.9698779881282797`*^9}, {3.971750000815803*^9, 3.971750008839031*^9}, {
+   3.983598602228278*^9, 
+   3.9835986515724487`*^9}},ExpressionUUID->"4957d546-66ac-4497-a8b2-\
 d5982cd30d83"],
 
 Cell[CellGroupData[{
@@ -111,6 +110,54 @@ Cell["Basic Modules (need to be loaded first)", "Subsection",
    3.784380479438534*^9, 
    3.784380483899742*^9}},ExpressionUUID->"0dcd60b2-b43b-4beb-b088-\
 0eb9eff94135"],
+
+Cell[CellGroupData[{
+
+Cell["To get the correct .m file", "Subsubsection",
+ CellChangeTimes->{{3.738664316543005*^9, 3.738664318701496*^9}, {
+   3.747637483529047*^9, 3.7476374840383997`*^9}, {3.747639114123144*^9, 
+   3.747639141305916*^9}, {3.74764575876602*^9, 3.7476457666042557`*^9}, 
+   3.770026882818462*^9, 3.7866889777227297`*^9, {3.966998252596258*^9, 
+   3.966998256970147*^9}, {3.9835983900571003`*^9, 
+   3.983598394345694*^9}},ExpressionUUID->"952ea2ed-0d8f-43d1-95da-\
+f817a95199ee"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"This", " ", "is", " ", "needed", " ", "so", " ", "that", " ", 
+    RowBox[{"the", " ", ".", "m"}], " ", "file", " ", "can", " ", "be", " ", 
+    "called", " ", "from", " ", "any", " ", "directory", " ", "and", " ", 
+    "not", " ", "have", " ", "any", " ", "directory", " ", 
+    RowBox[{"issues", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"packageDir", "=", 
+    RowBox[{"DirectoryName", "[", "$InputFileName", "]"}]}], ";", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"packageDir", "=", 
+      RowBox[{"NotebookDirectory", "[", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+     "If", " ", "this", " ", "is", " ", "uncommented", " ", "then", " ", 
+      "the", " ", "file", " ", "can", " ", "be", " ", "loaded", " ", 
+      "locally", " ", "and", " ", "one", " ", "can", " ", "explicitly", " ", 
+      "tests", " ", "the", " ", "various", " ", 
+      RowBox[{"functions", "."}]}]}], "\[IndentingNewLine]", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"dataFile", "[", "name_", "]"}], ":=", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+       "packageDir", ",", "\"\<..\>\"", ",", "\"\<BasicModules_data\>\"", ",",
+         "name"}], "}"}], "]"}]}], ";"}]}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.983598396321958*^9, 3.983598417377768*^9}, {
+  3.983598569486484*^9, 
+  3.983598585377528*^9}},ExpressionUUID->"d2ec2e5c-6fe7-4920-8f39-\
+5a96600a830b"]
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -178,7 +225,7 @@ Cell[BoxData[
    3.96699935654779*^9, 3.966999358705206*^9}, {3.9671583937597103`*^9, 
    3.967158406181151*^9}, {3.9671621800541267`*^9, 3.967162180506797*^9}, {
    3.9677128691334057`*^9, 3.967712896178658*^9}, 3.969878012161203*^9},
- CellLabel->"In[1]:=",ExpressionUUID->"5461cf3a-8e6d-44cb-8352-78a9e4b9dd0d"]
+ CellLabel->"In[4]:=",ExpressionUUID->"5461cf3a-8e6d-44cb-8352-78a9e4b9dd0d"]
 }, Closed]],
 
 Cell[CellGroupData[{
@@ -330,7 +377,7 @@ Cell[BoxData[{
    3.9690624202837543`*^9}, {3.969062478469948*^9, 3.969062611851132*^9}, 
    3.969062833724613*^9, {3.969063261682156*^9, 3.9690632870705023`*^9}, {
    3.969926329153718*^9, 3.969926329385147*^9}},
- CellLabel->"In[6]:=",ExpressionUUID->"831f50b6-b031-47e4-a2ab-b7d4410313ae"]
+ CellLabel->"In[9]:=",ExpressionUUID->"831f50b6-b031-47e4-a2ab-b7d4410313ae"]
 }, Closed]],
 
 Cell[CellGroupData[{
@@ -386,9 +433,9 @@ Cell[BoxData[
        RowBox[{"6", ">=", "orderQED", ">=", "2"}], "&&", 
        RowBox[{"orderQED", "\[Element]", "Integers"}], "&&", 
        RowBox[{
-        RowBox[{
-        "FileExistsQ", "[", "\"\<BasicModules_data/QED_p_int.dat\>\"", "]"}], 
-        "==", "True"}]}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"FileExistsQ", "[", 
+         RowBox[{"dataFile", "[", "\"\<QED_p_int.dat\>\"", "]"}], "]"}], "==",
+         "True"}]}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"ClearAll", "[", 
         RowBox[{
@@ -413,8 +460,8 @@ Cell[BoxData[
                  RowBox[{"[", "3", "]"}], "]"}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_p_int.dat\>\"", ",", "\"\<Table\>\"",
-                ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_p_int.dat\>\"", "]"}], ",", 
+               "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"dPintdTinterpol", "=", 
@@ -429,8 +476,8 @@ Cell[BoxData[
                  RowBox[{"[", "3", "]"}], "]"}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_dp_dT_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_dp_dT_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"d2PintdT2interpol", "=", 
@@ -445,8 +492,8 @@ Cell[BoxData[
                  RowBox[{"[", "3", "]"}], "]"}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_d2p_dT2_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_d2p_dT2_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
        "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -469,8 +516,8 @@ Cell[BoxData[
                   RowBox[{"[", "5", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_p_int.dat\>\"", ",", "\"\<Table\>\"",
-                ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_p_int.dat\>\"", "]"}], ",", 
+               "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"dPintdTinterpol", "=", 
@@ -488,8 +535,8 @@ Cell[BoxData[
                   RowBox[{"[", "5", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_dp_dT_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_dp_dT_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"d2PintdT2interpol", "=", 
@@ -507,8 +554,8 @@ Cell[BoxData[
                   RowBox[{"[", "5", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_d2p_dT2_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_d2p_dT2_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
        "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -533,8 +580,8 @@ Cell[BoxData[
                   RowBox[{"[", "6", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_p_int.dat\>\"", ",", "\"\<Table\>\"",
-                ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_p_int.dat\>\"", "]"}], ",", 
+               "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"dPintdTinterpol", "=", 
@@ -554,8 +601,8 @@ Cell[BoxData[
                   RowBox[{"[", "6", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_dp_dT_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_dp_dT_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"d2PintdT2interpol", "=", 
@@ -575,8 +622,8 @@ Cell[BoxData[
                   RowBox[{"[", "6", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_d2p_dT2_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_d2p_dT2_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
        "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -603,8 +650,8 @@ Cell[BoxData[
                   RowBox[{"[", "7", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_p_int.dat\>\"", ",", "\"\<Table\>\"",
-                ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_p_int.dat\>\"", "]"}], ",", 
+               "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"dPintdTinterpol", "=", 
@@ -626,8 +673,8 @@ Cell[BoxData[
                   RowBox[{"[", "7", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_dp_dT_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_dp_dT_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"d2PintdT2interpol", "=", 
@@ -649,8 +696,8 @@ Cell[BoxData[
                   RowBox[{"[", "7", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_d2p_dT2_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_d2p_dT2_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
        "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -679,8 +726,8 @@ Cell[BoxData[
                   RowBox[{"[", "7", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_p_int.dat\>\"", ",", "\"\<Table\>\"",
-                ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_p_int.dat\>\"", "]"}], ",", 
+               "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"dPintdTinterpol", "=", 
@@ -704,8 +751,8 @@ Cell[BoxData[
                   RowBox[{"[", "7", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_dp_dT_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_dp_dT_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"d2PintdT2interpol", "=", 
@@ -729,8 +776,8 @@ Cell[BoxData[
                   RowBox[{"[", "7", "]"}], "]"}]}]}], "}"}], "&"}], "/@", 
              RowBox[{"Import", "[", 
               RowBox[{
-              "\"\<BasicModules_data/QED_d2p_dT2_int.dat\>\"", ",", 
-               "\"\<Table\>\"", ",", 
+               RowBox[{"dataFile", "[", "\"\<QED_d2p_dT2_int.dat\>\"", "]"}], 
+               ",", "\"\<Table\>\"", ",", 
                RowBox[{"HeaderLines", "\[Rule]", " ", "3"}]}], "]"}]}], 
             "]"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
        "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -794,8 +841,10 @@ Cell[BoxData[
    3.969063771614188*^9}, {3.969880761912038*^9, 3.969880803579529*^9}, {
    3.969880844307316*^9, 3.969880945058413*^9}, {3.969880998623995*^9, 
    3.969881118544026*^9}, {3.9698811529191017`*^9, 3.969881212013672*^9}, 
-   3.9698813283505707`*^9, {3.971397050884234*^9, 3.97139705808672*^9}},
- CellLabel->"In[13]:=",ExpressionUUID->"d341927c-19ac-4f00-8089-343513abc109"],
+   3.9698813283505707`*^9, {3.971397050884234*^9, 3.97139705808672*^9}, {
+   3.983597629216505*^9, 3.983597713878552*^9}, {3.983597981601303*^9, 
+   3.9835979816073523`*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"d341927c-19ac-4f00-8089-343513abc109"],
 
 Cell[BoxData[
  RowBox[{
@@ -1192,7 +1241,7 @@ Cell[BoxData[
    3.966998639148037*^9}, 3.9677125068080273`*^9, {3.967712593344493*^9, 
    3.967712624254958*^9}, {3.96771288024347*^9, 3.9677128857357807`*^9}, {
    3.969880951962411*^9, 3.969880966144867*^9}},
- CellLabel->"In[19]:=",ExpressionUUID->"7acd0d43-527e-435c-9eb3-ec00c90f1ef2"],
+ CellLabel->"In[22]:=",ExpressionUUID->"7acd0d43-527e-435c-9eb3-ec00c90f1ef2"],
 
 Cell[BoxData[
  RowBox[{
@@ -2059,7 +2108,7 @@ Cell[BoxData[
    3.9689741256367693`*^9, 3.968974139985268*^9}, {3.968976562072496*^9, 
    3.9689767247212477`*^9}, {3.9689767812368317`*^9, 3.968976833406865*^9}, 
    3.968976874371173*^9, {3.968979615702962*^9, 3.9689796160270777`*^9}},
- CellLabel->"In[21]:=",ExpressionUUID->"eba23442-cc3f-4be5-997d-942805b06568"]
+ CellLabel->"In[24]:=",ExpressionUUID->"eba23442-cc3f-4be5-997d-942805b06568"]
 }, Closed]],
 
 Cell[CellGroupData[{
@@ -2088,16 +2137,17 @@ Cell[BoxData[{
   RowBox[{"If", "[", 
    RowBox[{
     RowBox[{
-     RowBox[{
-     "FileExistsQ", "[", 
-      "\"\<BasicModules_data/rate_coefficients_neutrinos.dat\>\"", "]"}], "==",
-      "True"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"FileExistsQ", "[", 
+      RowBox[{
+      "dataFile", "[", "\"\<rate_coefficients_neutrinos.dat\>\"", "]"}], 
+      "]"}], "==", "True"}], ",", "\[IndentingNewLine]", 
     RowBox[{
      RowBox[{"dataRates", "=", 
       RowBox[{"Import", "[", 
        RowBox[{
-       "\"\<BasicModules_data/rate_coefficients_neutrinos.dat\>\"", ",", 
-        "\"\<Table\>\"", ",", 
+        RowBox[{
+        "dataFile", "[", "\"\<rate_coefficients_neutrinos.dat\>\"", "]"}], 
+        ",", "\"\<Table\>\"", ",", 
         RowBox[{"HeaderLines", "\[Rule]", "3"}]}], "]"}]}], ";", 
      "\[IndentingNewLine]", 
      RowBox[{"interpolOrder", "=", "1"}], ";", "\[IndentingNewLine]", 
@@ -2748,8 +2798,9 @@ Cell[BoxData[{
    3.9671617337320023`*^9, 3.967161806790242*^9}, {3.9671618397904882`*^9, 
    3.967161840292941*^9}, {3.967162443343256*^9, 3.967162444195142*^9}, 
    3.9676310734608*^9, {3.971396929509378*^9, 3.971396933272217*^9}, {
-   3.971397122737956*^9, 3.971397123450038*^9}},
- CellLabel->"In[22]:=",ExpressionUUID->"3ee9652e-1380-489f-a953-54337c652284"]
+   3.971397122737956*^9, 3.971397123450038*^9}, {3.9835980034515953`*^9, 
+   3.9835980237134247`*^9}},
+ CellLabel->"In[25]:=",ExpressionUUID->"3ee9652e-1380-489f-a953-54337c652284"]
 }, Closed]],
 
 Cell[CellGroupData[{
@@ -4189,16 +4240,16 @@ Cell[BoxData[
  InitializationCell->True,
  CellChangeTimes->{{3.9669972980719767`*^9, 3.966997634978253*^9}, {
   3.966998989721459*^9, 3.966999027867964*^9}},
- CellLabel->"In[25]:=",ExpressionUUID->"94f0638b-951a-4eff-88b0-6ef7e995e823"]
+ CellLabel->"In[28]:=",ExpressionUUID->"94f0638b-951a-4eff-88b0-6ef7e995e823"]
 }, Closed]]
 }, Open  ]]
 },
 AutoGeneratedPackage->Automatic,
 Evaluator->"Local",
-WindowSize->{959.25, 526.5},
-WindowMargins->{{0, Automatic}, {0.75, Automatic}},
-TaggingRules->Association["TryRealOnly" -> False],
-FrontEndVersion->"12.1 for Linux x86 (64-bit) (June 19, 2020)",
+WindowSize->{960, 527},
+WindowMargins->{{199, Automatic}, {108, Automatic}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (July 24, 2023)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"bcccd738-8741-46b9-845a-2ec1fa92f56b"
 ]
@@ -4213,39 +4264,43 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 250, 5, 29, "Input",ExpressionUUID->"7f5e2c81-1d05-48cb-a770-61316a7686e8"],
-Cell[811, 27, 202, 4, 29, "Input",ExpressionUUID->"22ae96b9-f16e-4842-b297-23a39bb4155a"],
-Cell[1016, 33, 3128, 58, 357, "Text",ExpressionUUID->"4957d546-66ac-4497-a8b2-d5982cd30d83",
+Cell[558, 20, 246, 4, 30, "Input",ExpressionUUID->"7f5e2c81-1d05-48cb-a770-61316a7686e8"],
+Cell[807, 26, 3508, 64, 428, "Text",ExpressionUUID->"4957d546-66ac-4497-a8b2-d5982cd30d83",
  InitializationCell->True],
 Cell[CellGroupData[{
-Cell[4169, 95, 1192, 17, 54, "Subsection",ExpressionUUID->"0dcd60b2-b43b-4beb-b088-0eb9eff94135"],
+Cell[4340, 94, 1192, 17, 54, "Subsection",ExpressionUUID->"0dcd60b2-b43b-4beb-b088-0eb9eff94135"],
 Cell[CellGroupData[{
-Cell[5386, 116, 420, 6, 45, "Subsubsection",ExpressionUUID->"aa844190-8642-4997-993a-d04dd2ea76c2"],
-Cell[5809, 124, 2366, 56, 215, "Input",ExpressionUUID->"5461cf3a-8e6d-44cb-8352-78a9e4b9dd0d",
+Cell[5557, 115, 475, 7, 45, "Subsubsection",ExpressionUUID->"952ea2ed-0d8f-43d1-95da-f817a95199ee"],
+Cell[6035, 124, 1531, 34, 194, "Input",ExpressionUUID->"d2ec2e5c-6fe7-4920-8f39-5a96600a830b",
  InitializationCell->True]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[8212, 185, 421, 6, 37, "Subsubsection",ExpressionUUID->"0ad92fcd-683f-4da2-bcff-067789ad0d96"],
-Cell[8636, 193, 5632, 139, 606, "Input",ExpressionUUID->"831f50b6-b031-47e4-a2ab-b7d4410313ae",
+Cell[7603, 163, 420, 6, 37, "Subsubsection",ExpressionUUID->"aa844190-8642-4997-993a-d04dd2ea76c2"],
+Cell[8026, 171, 2366, 56, 215, "Input",ExpressionUUID->"5461cf3a-8e6d-44cb-8352-78a9e4b9dd0d",
  InitializationCell->True]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[14305, 337, 450, 8, 37, "Subsubsection",ExpressionUUID->"db994a86-7848-4329-99a1-3d89291f017b"],
-Cell[14758, 347, 18903, 450, 1737, "Input",ExpressionUUID->"d341927c-19ac-4f00-8089-343513abc109",
+Cell[10429, 232, 421, 6, 37, "Subsubsection",ExpressionUUID->"0ad92fcd-683f-4da2-bcff-067789ad0d96"],
+Cell[10853, 240, 5632, 139, 585, "Input",ExpressionUUID->"831f50b6-b031-47e4-a2ab-b7d4410313ae",
+ InitializationCell->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[16522, 384, 450, 8, 37, "Subsubsection",ExpressionUUID->"db994a86-7848-4329-99a1-3d89291f017b"],
+Cell[16975, 394, 19245, 452, 1632, "Input",ExpressionUUID->"d341927c-19ac-4f00-8089-343513abc109",
  InitializationCell->True],
-Cell[33664, 799, 14656, 395, 1121, "Input",ExpressionUUID->"7acd0d43-527e-435c-9eb3-ec00c90f1ef2",
+Cell[36223, 848, 14656, 395, 1100, "Input",ExpressionUUID->"7acd0d43-527e-435c-9eb3-ec00c90f1ef2",
  InitializationCell->True],
-Cell[48323, 1196, 32882, 865, 3033, "Input",ExpressionUUID->"eba23442-cc3f-4be5-997d-942805b06568",
+Cell[50882, 1245, 32882, 865, 2877, "Input",ExpressionUUID->"eba23442-cc3f-4be5-997d-942805b06568",
  InitializationCell->True]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[81242, 2066, 564, 10, 37, "Subsubsection",ExpressionUUID->"b74b0f26-65ee-4918-b4eb-8d82cf213167"],
-Cell[81809, 2078, 27875, 673, 2115, "Input",ExpressionUUID->"3ee9652e-1380-489f-a953-54337c652284",
+Cell[83801, 2115, 564, 10, 37, "Subsubsection",ExpressionUUID->"b74b0f26-65ee-4918-b4eb-8d82cf213167"],
+Cell[84368, 2127, 27969, 675, 1913, "Input",ExpressionUUID->"3ee9652e-1380-489f-a953-54337c652284",
  InitializationCell->True]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[109721, 2756, 674, 11, 37, "Subsubsection",ExpressionUUID->"c58c908c-1419-44aa-b1e3-e06c82c104a3"],
-Cell[110398, 2769, 51212, 1422, 5244, "Input",ExpressionUUID->"94f0638b-951a-4eff-88b0-6ef7e995e823",
+Cell[112374, 2807, 674, 11, 37, "Subsubsection",ExpressionUUID->"c58c908c-1419-44aa-b1e3-e06c82c104a3"],
+Cell[113051, 2820, 51212, 1422, 4406, "Input",ExpressionUUID->"94f0638b-951a-4eff-88b0-6ef7e995e823",
  InitializationCell->True]
 }, Closed]]
 }, Open  ]]
