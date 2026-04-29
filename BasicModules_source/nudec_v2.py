@@ -538,7 +538,7 @@ class NuDec:
             fa3 = self.f_a3_int(me/T_gam)
             fa4 = self.f_a4_int(me/T_gam)
             res1  = ( X*fa1 + Y*fa2 )*self.F_a_12(T_gam,T_nue,0,mu_nue)\
-                    + ( X*fa3 + Y*fa4 )*self.F_a_34(T_gam,T_nue,0,mu_nue)
+                  + ( X*fa3 + Y*fa4 )*self.F_a_34(T_gam,T_nue,0,mu_nue)
 
             # then, nu & nubar scattering on the QED plasma:
             fs1 = self.f_s1_int(me/T_gam)
@@ -547,7 +547,7 @@ class NuDec:
 
             # then, same exchanges with the nu_mu ensemble: (factor 2 for flavour)
             res3    = 2*( self.f_a1_0*self.F_a_12(T_numu,T_nue,mu_numu,mu_nue)\
-                        + self.f_a3_0*self.F_a_34(T_nue,T_nue,mu_numu,mu_nue) \
+                        + self.f_a3_0*self.F_a_34(T_numu,T_nue,mu_numu,mu_nue)\
                         + (7./4.)*self.f_s1_0*self.F_s_12(T_numu,T_nue,mu_numu,mu_nue) )
 
             return 32.*NuDec_Const.MeVtoSec*GF**2/np.pi**5 * (res1 + res2 + res3)
@@ -576,7 +576,7 @@ class NuDec:
 
             # then, same exchanges with the nu_mu ensemble: (note the order of arguments)
             res3    = - ( self.f_a1_0*self.F_a_12(T_numu,T_nue,mu_numu,mu_nue)\
-                        + self.f_a3_0*self.F_a_34(T_nue,T_nue,mu_numu,mu_nue) \
+                        + self.f_a3_0*self.F_a_34(T_numu,T_nue,mu_numu,mu_nue) \
                         + (7./4.)*self.f_s1_0*self.F_s_12(T_numu,T_nue,mu_numu,mu_nue) )
 
             return 32.*NuDec_Const.MeVtoSec*GF**2/np.pi**5 * (res1 + res2 + res3)
@@ -595,11 +595,11 @@ class NuDec:
             fn3 = self.f_n3_int(me/T_gam)
             fn4 = self.f_n4_int(me/T_gam)
             res1  = ( X*fn1 + Y*fn2 )*self.F_n_12(T_gam,T_nue,0,mu_nue)\
-                + ( X*fn3 + Y*fn4 )*self.F_n_34(T_gam,T_nue,0,mu_nue)
+                  + ( X*fn3 + Y*fn4 )*self.F_n_34(T_gam,T_nue,0,mu_nue)
 
             # then, same exchanges with the nu_mu ensemble: (factor 2 for flavour)
             res2    = 2*( self.f_n1_0*self.F_n_12(T_numu,T_nue,mu_numu,mu_nue)\
-                        + self.f_n3_0*self.F_n_34(T_nue,T_nue,mu_numu,mu_nue))
+                        + self.f_n3_0*self.F_n_34(T_numu,T_nue,mu_numu,mu_nue))
 
             return 8.*NuDec_Const.MeVtoSec*GF**2/np.pi**5 * ( res1 + res2 )
 
@@ -623,7 +623,7 @@ class NuDec:
 
             # then, same exchanges with the nu_mu ensemble: (note the order of arguments)
             res2    = - ( self.f_n1_0*self.F_n_12(T_numu,T_nue,mu_numu,mu_nue)\
-                        + self.f_n3_0*self.F_n_34(T_nue,T_nue,mu_numu,mu_nue))
+                        + self.f_n3_0*self.F_n_34(T_numu,T_nue,mu_numu,mu_nue))
 
             return 8.*NuDec_Const.MeVtoSec*GF**2/np.pi**5 * ( res1 + res2 )
 

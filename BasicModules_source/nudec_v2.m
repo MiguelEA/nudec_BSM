@@ -29,7 +29,7 @@ dataFile[name_]:=FileNameJoin[{packageDir,"..","BasicModules_data",name}];
 
 
 (* ::Input::Initialization:: *)
-(* Code based on [XXXXX.XXXXX] by M.Escudero, G.Jackson, M.Laine and S.Sandner 
+(* Code based on [2511.04747] by M.Escudero, G.Jackson, M.Laine and S.Sandner 
 v1 from M.Escudero in [1812.05605] and [2001.04466] *)
 
 (* If not initialized set up to default values *)
@@ -243,9 +243,9 @@ ClearAll[\[CapitalDelta]\[Rho]SM\[Nu]e,\[CapitalDelta]\[Rho]SM\[Nu]\[Mu],\[Capit
 
 Func[T1_,T2_,\[Mu]1_,\[Mu]2_]:=32 *fa1func[0]*(Exp[2 \[Mu]1/T1]T1^9-Exp[2 \[Mu]2/T2]T2^9)+32*fa3func[0](T1 T2)^4.5 *(Exp[2 \[Mu]2/T2]-Exp[2 \[Mu]1/T1])+56*fs1func[0]*T1^4 T2^4 Exp[\[Mu]1/T1]Exp[\[Mu]2/T2]*(T1-T2);
 
-\[CapitalDelta]\[Rho]SM\[Nu]e[T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1   (GF^2)/\[Pi]^5 (  4*32((T\[Gamma]^9-Exp[2 \[Mu]\[Nu]e/T\[Nu]e]T\[Nu]e^9)((gL^2+gR^2)fa1func[me/T\[Gamma]]+gL gR fa2func[me/T\[Gamma]] )+T\[Gamma]^9 (Exp[2 \[Mu]\[Nu]e/T\[Nu]e]-1)((gL^2+gR^2)fa3func[me/T\[Gamma]]+gL gR fa4func[me/T\[Gamma]] ))+ 4*56* T\[Gamma]^4 *T\[Nu]e^4*Exp[\[Mu]\[Nu]e/T\[Nu]e]*(T\[Gamma]-T\[Nu]e)((gL^2+gR^2)fs1func[me/T\[Gamma]]+gL gR fs2func[me/T\[Gamma]] )+  2Func[T\[Nu]\[Mu],T\[Nu]e,\[Mu]\[Nu]\[Mu],\[Mu]\[Nu]e])/.{gL->geL,gR->geR};
+\[CapitalDelta]\[Rho]SM\[Nu]e[T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1   (GF^2)/\[Pi]^5 (  4*32((T\[Gamma]^9-Exp[2 \[Mu]\[Nu]e/T\[Nu]e]T\[Nu]e^9)((gL^2+gR^2)fa1func[me/T\[Gamma]]+gL gR fa2func[me/T\[Gamma]] )+(T\[Gamma] T\[Nu]e)^4.5 (Exp[2 \[Mu]\[Nu]e/T\[Nu]e]-1)((gL^2+gR^2)fa3func[me/T\[Gamma]]+gL gR fa4func[me/T\[Gamma]] ))+ 4*56* T\[Gamma]^4 *T\[Nu]e^4*Exp[\[Mu]\[Nu]e/T\[Nu]e]*(T\[Gamma]-T\[Nu]e)((gL^2+gR^2)fs1func[me/T\[Gamma]]+gL gR fs2func[me/T\[Gamma]] )+  2Func[T\[Nu]\[Mu],T\[Nu]e,\[Mu]\[Nu]\[Mu],\[Mu]\[Nu]e])/.{gL->geL,gR->geR};
 
-\[CapitalDelta]\[Rho]SM\[Nu]\[Mu][T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1   (GF^2)/\[Pi]^5 (4*32((T\[Gamma]^9-Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]T\[Nu]\[Mu]^9)((gL^2+gR^2)fa1func[me/T\[Gamma]]+gL gR fa2func[me/T\[Gamma]] )+T\[Gamma]^9 (Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]-1)((gL^2+gR^2)fa3func[me/T\[Gamma]]+gL gR fa4func[me/T\[Gamma]] ))+4*56* T\[Gamma]^4 *T\[Nu]\[Mu]^4*Exp[\[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]*(T\[Gamma]-T\[Nu]\[Mu])((gL^2+gR^2)fs1func[me/T\[Gamma]]+gL gR fs2func[me/T\[Gamma]] )-Func[T\[Nu]\[Mu],T\[Nu]e,\[Mu]\[Nu]\[Mu],\[Mu]\[Nu]e])/.{gL->gmuL,gR->gmuR};
+\[CapitalDelta]\[Rho]SM\[Nu]\[Mu][T\[Gamma]_,T\[Nu]e_,T\[Nu]\[Mu]_,\[Mu]\[Nu]e_,\[Mu]\[Nu]\[Mu]_]:=FacMeVtos1   (GF^2)/\[Pi]^5 (4*32((T\[Gamma]^9-Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]T\[Nu]\[Mu]^9)((gL^2+gR^2)fa1func[me/T\[Gamma]]+gL gR fa2func[me/T\[Gamma]] )+(T\[Gamma] T\[Nu]\[Mu])^4.5 (Exp[2 \[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]-1)((gL^2+gR^2)fa3func[me/T\[Gamma]]+gL gR fa4func[me/T\[Gamma]] ))+4*56* T\[Gamma]^4 *T\[Nu]\[Mu]^4*Exp[\[Mu]\[Nu]\[Mu]/T\[Nu]\[Mu]]*(T\[Gamma]-T\[Nu]\[Mu])((gL^2+gR^2)fs1func[me/T\[Gamma]]+gL gR fs2func[me/T\[Gamma]] )-Func[T\[Nu]\[Mu],T\[Nu]e,\[Mu]\[Nu]\[Mu],\[Mu]\[Nu]e])/.{gL->gmuL,gR->gmuR};
 
 \[CapitalDelta]\[Rho]SM\[Nu][T\[Gamma]_,T\[Nu]_,\[Mu]\[Nu]_]:=1/3 (\[CapitalDelta]\[Rho]SM\[Nu]e[T\[Gamma],T\[Nu],T\[Nu],\[Mu]\[Nu],\[Mu]\[Nu]]+2\[CapitalDelta]\[Rho]SM\[Nu]\[Mu][T\[Gamma],T\[Nu],T\[Nu],\[Mu]\[Nu],\[Mu]\[Nu]]);
 
